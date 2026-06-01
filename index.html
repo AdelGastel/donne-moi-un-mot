@@ -7,8 +7,242 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#faf9f7;color:#1a1a1a;min-height:100vh}
+#app{max-width:420px;margin:0 auto;min-height:100vh;background:#fff;position:relative}
+.screen{display:none;flex-direction:column;min-height:100vh;padding:2rem 1.5rem}
+.screen.active{display:flex}
+.lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#999;margin-bottom:.6rem}
+.big-word{font-family:'Playfair Display',serif;font-size:3rem;color:#1a1a1a;line-height:1;margin-bottom:1.5rem}
+.divider{width:36px;height:1.5px;background:#ddd;margin-bottom:1.5rem}
+.def-text{font-size:15px;color:#555;line-height:1.75;font-weight:300;margin-bottom:auto}
+.def-text strong{color:#1a1a1a;font-weight:500}
+.back-btn{background:none;border:none;color:#aaa;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.5rem}
+.back-btn:hover{color:#777}
+.actions{display:flex;flex-direction:column;gap:10px;padding-top:1.5rem}
+.btn-main{background:#1a1a1a;color:#fff;border:none;border-radius:100px;padding:.85rem 1.5rem;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:opacity .15s,transform .15s;width:100%;text-align:center}
+.btn-main:hover{opacity:.85}
+.btn-main:active{transform:scale(.98)}
+.btn-soft{background:transparent;color:#555;border:1px solid #ddd;border-radius:100px;padding:.75rem 1.5rem;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;width:100%;text-align:center}
+.btn-soft:hover{background:#f5f5f5}
+.q-num{font-size:11px;color:#aaa;letter-spacing:.1em;margin-bottom:.4rem}
+.q-text{font-size:15px;color:#1a1a1a;font-weight:500;line-height:1.5;margin-bottom:.75rem}
+.q-block{margin-bottom:1.25rem}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{background:#f8f8f6;border:1px solid #eee;border-radius:10px;padding:.65rem .9rem;font-size:14px;font-family:'DM Sans',sans-serif;color:#555;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;transition:all .15s}
+.opt:hover{border-color:#bbb;color:#1a1a1a;background:#fff}
+.opt.sel{background:#fff;border-color:#1a1a1a;color:#1a1a1a;font-weight:500}
+.opt-l{width:20px;height:20px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#888;flex-shrink:0;transition:all .15s}
+.opt.sel .opt-l{background:#1a1a1a;color:#fff}
+.score-bar{height:3px;background:#eee;border-radius:3px;margin:1rem 0 1.5rem;overflow:hidden}
+.score-fill{height:100%;border-radius:3px;background:#1a1a1a;transition:width .8s ease;width:0%}
+.res-text{font-size:15px;color:#555;line-height:1.8;font-weight:300;margin-bottom:1.5rem}
+.defi-card{background:#f8f8f6;border:1px solid #eee;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.5rem}
+.defi-text{font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.5}
+.passe-card{background:#fff;border:1px solid #eee;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.passe-input-row{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
+.passe-input-row input{font-family:'DM Sans',sans-serif;font-size:14px;border-radius:10px;border:1px solid #ddd;padding:.65rem .9rem;color:#1a1a1a;background:#f8f8f6;width:100%}
+.mots-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:1rem}
+.mot-chip{background:#f8f8f6;border:1px solid #eee;border-radius:10px;padding:.55rem .7rem;font-size:13px;color:#555;cursor:pointer;text-align:center;transition:all .15s;font-family:'DM Sans',sans-serif}
+.mot-chip:hover{border-color:#bbb;color:#1a1a1a;background:#fff}
+.mot-chip.sel-chip{background:#fff;border-color:#1a1a1a;color:#1a1a1a;font-weight:500}
+.sent-icon{width:52px;height:52px;border-radius:50%;background:#f8f8f6;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
+.sent-word{font-family:'Playfair Display',serif;font-size:2rem;color:#1a1a1a;text-align:center;margin-bottom:.5rem}
+.sent-sub{font-size:14px;color:#777;text-align:center;line-height:1.6;margin-bottom:auto;white-space:pre-line}
+#screen-home{justify-content:flex-end;padding-bottom:3rem}
+.home-intro{margin-bottom:auto;padding-top:3rem}
+.home-from{font-size:13px;color:#aaa;margin-bottom:.5rem}
+.home-msg{font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a1a1a;line-height:1.3;margin-bottom:1rem}
+.home-word-badge{display:inline-block;background:#f8f8f6;border:1px solid #ddd;border-radius:100px;padding:.4rem 1rem;font-size:14px;color:#555;margin-bottom:1.5rem}
+</style>
 </head>
 <body>
-<p>Test</p>
+<div id="app">
+
+  <div id="screen-home" class="screen active">
+    <div class="home-intro">
+      <p class="home-from" id="home-from-label">Bienvenue</p>
+      <p class="home-msg" id="home-msg">Découvre un mot, fais le test, passe la balle.</p>
+      <div class="home-word-badge" id="home-badge">Donne-moi un mot</div>
+      <p style="font-size:14px;color:#777;line-height:1.6">Découvre ce que ça signifie pour toi, fais le test, puis passe la balle à quelqu'un.</p>
+    </div>
+    <div class="actions">
+      <button class="btn-main" onclick="goToMot()">Découvrir le mot <i class="ti ti-arrow-right"></i></button>
+      <button class="btn-soft" onclick="goToChoix()">Choisir mon propre mot</button>
+    </div>
+  </div>
+
+  <div id="screen-choix" class="screen">
+    <button class="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i> Accueil</button>
+    <p class="lbl">Quel mot veux-tu explorer ?</p>
+    <p style="font-size:14px;color:#777;margin-bottom:1.5rem;line-height:1.6">Choisis un adjectif. Parce que tu penses qu'il te correspond — ou qu'il pourrait t'inspirer.</p>
+    <div class="mots-grid" id="choix-grid"></div>
+    <div class="actions" style="margin-top:auto">
+      <button class="btn-main" id="btn-choix-valider" onclick="validerChoix()" disabled style="opacity:.4;cursor:not-allowed">Continuer <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div id="screen-mot" class="screen">
+    <button class="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i> Accueil</button>
+    <p class="lbl">Ton mot</p>
+    <h2 class="big-word" id="mot-display"></h2>
+    <div class="divider"></div>
+    <p class="def-text" id="mot-def"></p>
+    <div class="actions">
+      <button class="btn-main" onclick="goToTest()">Faire le test <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div id="screen-test" class="screen">
+    <button class="back-btn" onclick="goToMot()"><i class="ti ti-arrow-left"></i> Le mot</button>
+    <p class="lbl" id="test-lbl"></p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#1a1a1a;margin-bottom:1.5rem" id="test-title"></p>
+    <div id="questions-container"></div>
+    <div class="actions" style="margin-top:auto">
+      <button class="btn-main" id="btn-valider" onclick="validerTest()" disabled style="opacity:.4;cursor:not-allowed">Voir mon résultat</button>
+    </div>
+  </div>
+
+  <div id="screen-resultat" class="screen">
+    <button class="back-btn" onclick="goToTest()"><i class="ti ti-arrow-left"></i> Le test</button>
+    <p class="lbl" id="res-lbl"></p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#1a1a1a;margin-bottom:.2rem" id="res-titre"></p>
+    <p style="font-size:12px;color:#aaa;margin-bottom:.5rem" id="res-scores"></p>
+    <div class="score-bar"><div class="score-fill" id="score-fill"></div></div>
+    <p class="res-text" id="res-text"></p>
+    <div class="defi-card">
+      <p class="lbl">Ton défi du jour</p>
+      <p class="defi-text" id="defi-text"></p>
+    </div>
+    <div class="actions">
+      <button class="btn-main" onclick="goToPasse()">Passer la balle <i class="ti ti-send"></i></button>
+      <button class="btn-soft" onclick="goToChoix()">Recommencer avec un autre mot</button>
+    </div>
+  </div>
+
+  <div id="screen-passe" class="screen">
+    <button class="back-btn" onclick="goToResultat()"><i class="ti ti-arrow-left"></i> Mon résultat</button>
+    <p class="lbl">Passer la balle</p>
+    <div class="passe-card">
+      <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#1a1a1a;margin-bottom:.5rem">À qui veux-tu envoyer un mot ?</p>
+      <p style="font-size:13px;color:#777;line-height:1.5;margin-bottom:1rem">Choisis quelqu'un. Puis choisis le mot que tu lui offres.</p>
+      <div class="passe-input-row">
+        <input type="text" id="prenom-envoyeur" placeholder="Ton prénom" maxlength="30">
+        <input type="text" id="prenom-dest" placeholder="Prénom de la personne" maxlength="30">
+      </div>
+      <p style="font-size:12px;color:#aaa;margin-bottom:.75rem;letter-spacing:.1em;text-transform:uppercase">Choisis son mot</p>
+      <div class="mots-grid" id="passe-mots-grid"></div>
+    </div>
+    <div class="actions">
+      <button class="btn-main" id="btn-generer" onclick="genererLien()" disabled style="opacity:.4;cursor:not-allowed">Générer le lien <i class="ti ti-link"></i></button>
+    </div>
+  </div>
+
+  <div id="screen-envoi" class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 0">
+      <div class="sent-icon"><i class="ti ti-send" style="font-size:22px;color:#aaa"></i></div>
+      <p style="font-size:12px;color:#aaa;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">Le mot que tu envoies</p>
+      <p class="sent-word" id="envoi-mot"></p>
+      <p class="sent-sub" id="envoi-sub"></p>
+    </div>
+    <div style="background:#f8f8f6;border:1px solid #eee;border-radius:12px;padding:1rem;margin-bottom:1rem">
+      <p style="font-size:12px;color:#aaa;margin-bottom:.5rem">Lien à copier et envoyer</p>
+      <p style="font-size:13px;color:#1a1a1a;font-family:monospace;word-break:break-all;line-height:1.5" id="lien-display"></p>
+    </div>
+    <div class="actions">
+      <button class="btn-main" onclick="copierLien()"><i class="ti ti-copy"></i> <span id="btn-copier-txt">Copier le lien</span></button>
+      <button class="btn-soft" onclick="goToPasse()">Changer le destinataire</button>
+    </div>
+  </div>
+
+</div>
+<script>
+const MOTS=[{mot:"Généreux",definition:"Être généreux, c'est partager volontairement ce que l'on possède : son temps, son attention, son énergie, ses ressources. <strong>La générosité ne se mesure pas à la richesse. Elle se mesure à l'envie de donner.</strong>",testTitle:"Es-tu vraiment généreux ?",questions:[{texte:"Un collègue ou un voisin a besoin d'un coup de main.",options:[{l:"Je propose mon aide spontanément.",s:"A"},{l:"J'aide si on me le demande.",s:"B"},{l:"Je préfère ne pas m'impliquer.",s:"C"}]},{texte:"Quelqu'un te raconte un problème.",options:[{l:"Je prends le temps de l'écouter pleinement.",s:"A"},{l:"J'écoute quelques minutes.",s:"B"},{l:"J'essaie de changer de sujet.",s:"C"}]},{texte:"Tu possèdes quelque chose dont tu n'as plus besoin.",options:[{l:"Je le donne volontiers.",s:"A"},{l:"Je réfléchis avant de donner.",s:"B"},{l:"Je préfère le conserver.",s:"C"}]}],resultats:{A:{titre:"Générosité affirmée",texte:"Tu partages naturellement. Les autres apprécient probablement ta présence et ton soutien sans condition.",defi:"Offre quelque chose que tu aimes à quelqu'un, sans occasion particulière.",pct:92},B:{titre:"Générosité en développement",texte:"Tu sais être généreux quand les circonstances s'y prêtent. De petits gestes quotidiens peuvent encore ouvrir ce chemin.",defi:"Cette semaine, propose ton aide avant qu'on te le demande.",pct:58},C:{titre:"Graine de générosité",texte:"La générosité est une compétence qui se cultive. Un geste simple aujourd'hui peut déjà faire une vraie différence.",defi:"Commence petit : donne quelque chose de ton temps à quelqu'un aujourd'hui.",pct:28}}},{mot:"Courageux",definition:"Le courage, ce n'est pas l'absence de peur. <strong>C'est agir malgré elle.</strong> Être courageux, c'est avancer vers ce qui est difficile ou incertain, par conviction plutôt que par obligation.",testTitle:"Es-tu vraiment courageux ?",questions:[{texte:"Face à une situation difficile qui te concerne directement.",options:[{l:"Je l'affronte, même si c'est inconfortable.",s:"A"},{l:"J'attends que ça se calme avant d'agir.",s:"B"},{l:"J'évite autant que possible.",s:"C"}]},{texte:"Quelqu'un dit quelque chose d'injuste devant toi.",options:[{l:"Je prends la parole, même seul contre tous.",s:"A"},{l:"Je réagis si les autres réagissent aussi.",s:"B"},{l:"Je me tais pour ne pas créer de vagues.",s:"C"}]},{texte:"Un projet important te fait peur.",options:[{l:"La peur m'indique que c'est important : je me lance.",s:"A"},{l:"Je commence prudemment, en testant.",s:"B"},{l:"Je le reporte jusqu'à me sentir prêt.",s:"C"}]}],resultats:{A:{titre:"Courage affirmé",texte:"Tu fais partie de ceux qui avancent même quand c'est difficile. Les autres te font confiance dans les moments importants.",defi:"Dis une vérité difficile, avec bienveillance, à quelqu'un qui en a besoin.",pct:90},B:{titre:"Courage en construction",texte:"Tu es courageux dans certains contextes, mais tu as parfois besoin d'un élan extérieur. Le courage se renforce par la pratique.",defi:"Prends cette semaine une décision que tu remettais à plus tard.",pct:55},C:{titre:"Graine de courage",texte:"La prudence est une qualité, mais elle peut parfois masquer une peur qu'on évite. Le courage s'apprend, un petit pas à la fois.",defi:"Fais aujourd'hui une chose qui te met légèrement hors de ta zone de confort.",pct:25}}},{mot:"Curieux",definition:"La curiosité, c'est cet appétit pour ce qu'on ne connaît pas encore. <strong>Un esprit curieux ne se contente pas des réponses — il aime les questions.</strong> C'est ce qui pousse à apprendre, explorer, s'étonner.",testTitle:"Es-tu vraiment curieux ?",questions:[{texte:"Tu tombes sur un sujet que tu ne connais pas du tout.",options:[{l:"Je cherche immédiatement à en savoir plus.",s:"A"},{l:"Je m'y intéresse si ça semble utile.",s:"B"},{l:"Je passe, ça ne me concerne pas.",s:"C"}]},{texte:"Quelqu'un te parle de sa passion, que tu ne partages pas.",options:[{l:"Je pose des questions sincères.",s:"A"},{l:"J'écoute poliment.",s:"B"},{l:"J'essaie de terminer la conversation.",s:"C"}]},{texte:"Tu as du temps libre inattendu.",options:[{l:"Je lis, j'explore, j'apprends quelque chose.",s:"A"},{l:"Je mélange détente et exploration.",s:"B"},{l:"Je me détends sans penser à apprendre.",s:"C"}]}],resultats:{A:{titre:"Curiosité vive",texte:"Tu as un appétit naturel pour le monde. Les gens autour de toi l'ont sûrement remarqué : tu poses les questions que les autres n'osent pas.",defi:"Apprends aujourd'hui quelque chose sur un sujet qui t'est totalement étranger.",pct:88},B:{titre:"Curiosité sélective",texte:"Ta curiosité s'active surtout quand quelque chose t'interpelle vraiment. C'est une forme efficace, que tu peux élargir.",defi:"Cette semaine, lis ou écoute quelque chose hors de tes sujets habituels.",pct:52},C:{titre:"Graine de curiosité",texte:"La curiosité s'apprivoise. Elle commence souvent par un seul sujet qui nous passionne, puis s'étend naturellement.",defi:"Pose aujourd'hui une vraie question à quelqu'un sur sa vie ou son métier.",pct:22}}},{mot:"Patient",definition:"La patience, c'est l'art de rester serein quand le temps s'étire. <strong>Être patient, c'est accepter que les bonnes choses prennent le temps qu'elles prennent</strong> — et continuer d'avancer sans se laisser consumer par l'urgence.",testTitle:"Es-tu vraiment patient ?",questions:[{texte:"Tu attends quelque chose depuis longtemps sans résultat.",options:[{l:"Je reste serein et confiant dans le processus.",s:"A"},{l:"Je m'impatiente, mais je tiens.",s:"B"},{l:"Je perds vite ma motivation.",s:"C"}]},{texte:"Quelqu'un met plus de temps que toi pour comprendre.",options:[{l:"Je prends le temps qu'il faut pour l'accompagner.",s:"A"},{l:"J'aide, mais une tension monte en moi.",s:"B"},{l:"Je finis par faire les choses à sa place.",s:"C"}]},{texte:"Un projet avance beaucoup plus lentement que prévu.",options:[{l:"Je m'adapte et recalibrate mes attentes.",s:"A"},{l:"Je cherche à accélérer, parfois trop.",s:"B"},{l:"Je ressens une frustration difficile à gérer.",s:"C"}]}],resultats:{A:{titre:"Patience affirmée",texte:"Tu laisses les choses se déployer à leur rythme. Cette qualité est profondément apaisante pour ceux qui t'entourent.",defi:"Laisse une conversation se terminer naturellement, sans la précipiter.",pct:86},B:{titre:"Patience en travail",texte:"Tu peux être patient, mais certaines situations ébranlent ta tranquillité. C'est humain — la patience se renforce avec la pratique consciente.",defi:"Identifie une situation où tu t'impatientes souvent, et observe-la autrement.",pct:50},C:{titre:"Graine de patience",texte:"L'impatience est souvent signe de passion. Canaliser cette énergie vers l'acceptation du rythme des autres est un beau défi.",defi:"Prends trois respirations profondes avant de réagir à une lenteur aujourd'hui.",pct:22}}},{mot:"Bienveillant",definition:"La bienveillance, c'est regarder les autres avec douceur, sans les juger pour ce qu'ils ne sont pas encore. <strong>C'est vouloir le bien de l'autre — même quand ça ne nous coûte rien, et même quand ça nous coûte quelque chose.</strong>",testTitle:"Es-tu vraiment bienveillant ?",questions:[{texte:"Quelqu'un fait une erreur devant toi.",options:[{l:"Je cherche d'abord à comprendre pourquoi.",s:"A"},{l:"Je corrige, parfois sèchement.",s:"B"},{l:"Je juge intérieurement, même si je ne dis rien.",s:"C"}]},{texte:"Une personne que tu n'aimes pas beaucoup traverse une période difficile.",options:[{l:"Je mets de côté mes a priori et je l'aide.",s:"A"},{l:"Je m'en préoccupe un peu, de loin.",s:"B"},{l:"Je reste indifférent.",s:"C"}]},{texte:"On te parle de quelqu'un que tu ne connais pas.",options:[{l:"Je lui accorde le bénéfice du doute.",s:"A"},{l:"Je reste neutre sans me forcer.",s:"B"},{l:"Je me forge vite une opinion négative.",s:"C"}]}],resultats:{A:{titre:"Bienveillance naturelle",texte:"Tu portes un regard doux sur les autres, même ceux qui ne le méritent pas toujours. C'est rare et précieux.",defi:"Dis quelque chose de sincèrement positif à quelqu'un que tu vois souvent.",pct:91},B:{titre:"Bienveillance intermittente",texte:"Tu es capable de bienveillance, mais elle n'est pas toujours ta première réaction. Un peu de pratique consciente peut changer ça.",defi:"Avant de juger quelqu'un aujourd'hui, imagine une raison qui l'excuse.",pct:54},C:{titre:"Graine de bienveillance",texte:"Le jugement rapide protège, mais il éloigne. La bienveillance s'apprend en s'interrogeant sur ses propres réactions.",defi:"Observe sans juger une personne que tu aurais tendance à critiquer.",pct:24}}},{mot:"Créatif",definition:"La créativité, ce n'est pas réservé aux artistes. <strong>C'est la capacité à voir les choses autrement, à trouver une solution là où les autres voient un mur.</strong> C'est jouer avec le monde plutôt que de le subir.",testTitle:"Es-tu vraiment créatif ?",questions:[{texte:"Face à un problème sans solution évidente.",options:[{l:"Je cherche des approches inattendues.",s:"A"},{l:"Je teste plusieurs options classiques.",s:"B"},{l:"J'attends que quelqu'un d'autre trouve.",s:"C"}]},{texte:"Quand tu as du temps non structuré.",options:[{l:"Je crée quelque chose : j'écris, je construis, j'invente.",s:"A"},{l:"Je consomme du contenu qui m'inspire.",s:"B"},{l:"Je ne sais pas quoi en faire.",s:"C"}]},{texte:"Quelqu'un te dit que ton idée est impossible.",options:[{l:"Ça m'encourage à chercher comment la rendre possible.",s:"A"},{l:"Je l'écoute et je revois mon idée.",s:"B"},{l:"J'abandonne assez vite.",s:"C"}]}],resultats:{A:{titre:"Créativité affirmée",texte:"Tu vois des possibilités là où les autres voient des obstacles. Cette façon d'habiter le monde est un vrai cadeau.",defi:"Crée quelque chose aujourd'hui — même petit, même imparfait.",pct:89},B:{titre:"Créativité en éveil",texte:"Tu as une sensibilité créative, mais elle s'exprime surtout en réaction. En lui donnant plus d'espace, elle peut s'épanouir.",defi:"Essaie de résoudre un problème du quotidien de façon inhabituelle.",pct:53},C:{titre:"Graine de créativité",texte:"La créativité sommeille souvent sous les habitudes. Un seul geste différent peut la réveiller.",defi:"Fais quelque chose que tu n'as jamais fait, même quelque chose de très simple.",pct:23}}}];
+
+let currentMot=null,answers={},passeMot=null;
+function getMot(n){return MOTS.find(m=>m.mot===n)||MOTS[0]}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+
+function readURL(){
+  const p=new URLSearchParams(window.location.search);
+  const mot=p.get('mot'),de=p.get('de'),pour=p.get('pour');
+  if(mot&&de){
+    currentMot=getMot(mot);
+    document.getElementById('home-from-label').textContent='De la part de '+de+(pour?' pour '+pour:'');
+    document.getElementById('home-msg').textContent='Il ou elle t\'a envoyé un mot.';
+    document.getElementById('home-badge').textContent=mot;
+  } else {
+    currentMot=getMot('Généreux');
+    document.getElementById('home-from-label').textContent='Bienvenue';
+    document.getElementById('home-msg').textContent='Découvre un mot, fais le test, passe la balle.';
+    document.getElementById('home-badge').textContent='Donne-moi un mot';
+  }
+}
+
+function goHome(){readURL();show('screen-home')}
+function goToMot(){document.getElementById('mot-display').textContent=currentMot.mot;document.getElementById('mot-def').innerHTML=currentMot.definition;answers={};show('screen-mot')}
+function goToTest(){
+  answers={};
+  document.getElementById('test-lbl').textContent=currentMot.mot;
+  document.getElementById('test-title').textContent=currentMot.testTitle;
+  const c=document.getElementById('questions-container');c.innerHTML='';
+  currentMot.questions.forEach((q,qi)=>{
+    const b=document.createElement('div');b.className='q-block';
+    b.innerHTML='<p class="q-num">Question '+(qi+1)+' / '+currentMot.questions.length+'</p><p class="q-text">'+q.texte+'</p><div class="opts" id="opts-'+qi+'"></div>';
+    c.appendChild(b);
+    const opts=b.querySelector('.opts');
+    q.options.forEach((o,oi)=>{
+      const btn=document.createElement('button');btn.className='opt';
+      btn.innerHTML='<span class="opt-l">'+['A','B','C'][oi]+'</span>'+o.l;
+      btn.onclick=()=>{opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));btn.classList.add('sel');answers[qi]=o.s;checkValider()};
+      opts.appendChild(btn);
+    });
+  });
+  checkValider();show('screen-test');
+}
+function checkValider(){const btn=document.getElementById('btn-valider');const ok=Object.keys(answers).length===currentMot.questions.length;btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed'}
+function validerTest(){
+  const cnt={A:0,B:0,C:0};Object.values(answers).forEach(s=>cnt[s]++);
+  let maj='B';if(cnt.A>=cnt.B&&cnt.A>=cnt.C)maj='A';else if(cnt.C>cnt.A&&cnt.C>=cnt.B)maj='C';
+  const r=currentMot.resultats[maj];
+  document.getElementById('res-lbl').textContent=currentMot.mot+' · ton profil';
+  document.getElementById('res-titre').textContent=r.titre;
+  document.getElementById('res-scores').textContent=cnt.A+' A · '+cnt.B+' B · '+cnt.C+' C';
+  document.getElementById('res-text').textContent=r.texte;
+  document.getElementById('defi-text').textContent=r.defi;
+  show('screen-resultat');setTimeout(()=>{document.getElementById('score-fill').style.width=r.pct+'%'},200);
+}
+function goToResultat(){show('screen-resultat')}
+function goToChoix(){
+  const grid=document.getElementById('choix-grid');grid.innerHTML='';passeMot=null;
+  MOTS.forEach(m=>{const chip=document.createElement('button');chip.className='mot-chip';chip.textContent=m.mot;chip.onclick=()=>{grid.querySelectorAll('.mot-chip').forEach(c=>c.classList.remove('sel-chip'));chip.classList.add('sel-chip');passeMot=m.mot;const btn=document.getElementById('btn-choix-valider');btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer'};grid.appendChild(chip)});
+  const btn=document.getElementById('btn-choix-valider');btn.disabled=true;btn.style.opacity='.4';btn.style.cursor='not-allowed';
+  show('screen-choix');
+}
+function validerChoix(){if(!passeMot)return;currentMot=getMot(passeMot);goToMot()}
+function goToPasse(){
+  const grid=document.getElementById('passe-mots-grid');grid.innerHTML='';passeMot=null;
+  document.getElementById('prenom-envoyeur').value='';document.getElementById('prenom-dest').value='';
+  MOTS.forEach(m=>{const chip=document.createElement('button');chip.className='mot-chip';chip.textContent=m.mot;chip.onclick=()=>{grid.querySelectorAll('.mot-chip').forEach(c=>c.classList.remove('sel-chip'));chip.classList.add('sel-chip');passeMot=m.mot;checkPasse()};grid.appendChild(chip)});
+  ['prenom-envoyeur','prenom-dest'].forEach(id=>{document.getElementById(id).addEventListener('input',checkPasse)});
+  checkPasse();show('screen-passe');
+}
+function checkPasse(){const e=document.getElementById('prenom-envoyeur').value.trim();const d=document.getElementById('prenom-dest').value.trim();const btn=document.getElementById('btn-generer');const ok=e.length>0&&d.length>0&&passeMot;btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed'}
+function genererLien(){
+  const e=document.getElementById('prenom-envoyeur').value.trim();const d=document.getElementById('prenom-dest').value.trim();
+  if(!e||!d||!passeMot)return;
+  const base=window.location.origin+window.location.pathname;
+  const lien=base+'?mot='+encodeURIComponent(passeMot)+'&de='+encodeURIComponent(e)+'&pour='+encodeURIComponent(d);
+  document.getElementById('envoi-mot').textContent=passeMot;
+  document.getElementById('envoi-sub').textContent=e+' envoie le mot "'+passeMot+'" à '+d+'.\nQuand '+d+' cliquera sur le lien, il découvrira le mot et pourra faire le test.';
+  document.getElementById('lien-display').textContent=lien;
+  document.getElementById('btn-copier-txt').textContent='Copier le lien';
+  show('screen-envoi');
+}
+function copierLien(){const lien=document.getElementById('lien-display').textContent;navigator.clipboard.writeText(lien).then(()=>{document.getElementById('btn-copier-txt').textContent='Lien copié !';setTimeout(()=>{document.getElementById('btn-copier-txt').textContent='Copier le lien'},2000)}).catch(()=>{document.getElementById('btn-copier-txt').textContent='Lien copié !'})}
+
+readURL();
+</script>
 </body>
 </html>
