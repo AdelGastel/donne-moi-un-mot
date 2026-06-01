@@ -3,188 +3,299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Donne-moi un mot</title>
+<title>Un mot pour toi</title>
+<meta name="description" content="Un mot pour toi — offrir un regard bienveillant à quelqu'un qui compte.">
+<meta name="author" content="Adel Gastel">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#faf9f7;color:#1a1a1a;min-height:100vh}
-#app{max-width:420px;margin:0 auto;min-height:100vh;background:#fff;position:relative}
-.screen{display:none;flex-direction:column;min-height:100vh;padding:2rem 1.5rem}
+body{font-family:'DM Sans',sans-serif;background:#f5f0eb;color:#1a1a2e;min-height:100vh;display:flex;flex-direction:column}
+#app{max-width:420px;margin:0 auto;min-height:100vh;background:#fdf9f4;position:relative;display:flex;flex-direction:column}
+.screen{display:none;flex-direction:column;min-height:100vh;padding:2.5rem 1.75rem 2rem;transition:background .4s}
 .screen.active{display:flex}
-.lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#999;margin-bottom:.6rem}
-.big-word{font-family:'Playfair Display',serif;font-size:3rem;color:#1a1a1a;line-height:1;margin-bottom:1.5rem}
-.divider{width:36px;height:1.5px;background:#ddd;margin-bottom:1.5rem}
-.def-text{font-size:15px;color:#555;line-height:1.75;font-weight:300;margin-bottom:auto}
-.def-text strong{color:#1a1a1a;font-weight:500}
-.back-btn{background:none;border:none;color:#aaa;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:1.5rem}
-.back-btn:hover{color:#777}
-.actions{display:flex;flex-direction:column;gap:10px;padding-top:1.5rem}
-.btn-main{background:#1a1a1a;color:#fff;border:none;border-radius:100px;padding:.85rem 1.5rem;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:opacity .15s,transform .15s;width:100%;text-align:center}
-.btn-main:hover{opacity:.85}
-.btn-main:active{transform:scale(.98)}
-.btn-soft{background:transparent;color:#555;border:1px solid #ddd;border-radius:100px;padding:.75rem 1.5rem;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;width:100%;text-align:center}
-.btn-soft:hover{background:#f5f5f5}
-.q-num{font-size:11px;color:#aaa;letter-spacing:.1em;margin-bottom:.4rem}
-.q-text{font-size:15px;color:#1a1a1a;font-weight:500;line-height:1.5;margin-bottom:.75rem}
-.q-block{margin-bottom:1.25rem}
+
+/* COLOR FAMILIES */
+.col-terra{background:linear-gradient(160deg,#fdf0ea 0%,#fdf9f4 65%)}
+.col-blue{background:linear-gradient(160deg,#eaf3fd 0%,#fdf9f4 65%)}
+.col-sage{background:linear-gradient(160deg,#eaf5ee 0%,#fdf9f4 65%)}
+.col-rose{background:linear-gradient(160deg,#fdeef4 0%,#fdf9f4 65%)}
+.col-gold{background:linear-gradient(160deg,#fdf4e3 0%,#fdf9f4 65%)}
+.col-plum{background:linear-gradient(160deg,#f2eef8 0%,#fdf9f4 65%)}
+
+/* ACCENT COLORS */
+.acc-terra{color:#c26940;background:#fde8dc;border-color:#f5c9b5}
+.acc-blue{color:#2a6fa8;background:#dceeff;border-color:#b5d8f5}
+.acc-sage{color:#3a7a52;background:#daf0e2;border-color:#b5dfc5}
+.acc-rose{color:#b84d7a;background:#fde0ec;border-color:#f5b5cf}
+.acc-gold{color:#a07020;background:#fdefc8;border-color:#f5dca0}
+.acc-plum{color:#6a3a9a;background:#ede0f8;border-color:#d5b8f0}
+
+.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#bbb;margin-bottom:.5rem}
+.word-big{font-family:'Playfair Display',serif;font-size:3rem;color:#1a1a2e;line-height:1;margin-bottom:.2rem}
+.word-form{font-family:'Playfair Display',serif;font-size:1rem;color:#bbb;font-style:italic;margin-bottom:1.5rem}
+.word-badge{display:inline-flex;align-items:center;gap:8px;border-radius:100px;padding:.35rem 1rem;font-size:13px;font-weight:500;margin-bottom:1.2rem;border:1px solid}
+.word-badge-dot{width:7px;height:7px;border-radius:50%}
+
+.def-card{background:#fff;border-radius:16px;padding:1.1rem 1.25rem;border:1px solid #f0e8e0;margin-bottom:auto}
+.def-text{font-size:15px;color:#666;line-height:1.8;font-weight:300}
+.def-text strong{color:#1a1a2e;font-weight:500}
+
+.actions{padding-top:1.5rem;display:flex;flex-direction:column;gap:9px}
+.btn-dark{background:#1a1a2e;color:#fff;border:none;border-radius:100px;padding:.85rem 1.5rem;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;width:100%;text-align:center;cursor:pointer;transition:opacity .15s}
+.btn-dark:hover{opacity:.88}
+.btn-light{background:#fff;color:#777;border:1px solid #e8e0d5;border-radius:100px;padding:.75rem 1.5rem;font-size:14px;font-family:'DM Sans',sans-serif;width:100%;text-align:center;cursor:pointer;transition:background .15s}
+.btn-light:hover{background:#f8f3ee}
+.back-btn{background:none;border:none;color:#bbb;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;padding:0;margin-bottom:1.75rem;display:flex;align-items:center;gap:4px}
+.back-btn:hover{color:#888}
+
+.home-from{font-size:12px;color:#bbb;margin-bottom:.5rem;letter-spacing:.05em}
+.home-msg{font-family:'Playfair Display',serif;font-size:1.75rem;color:#1a1a2e;line-height:1.25;margin-bottom:1rem}
+.home-sub{font-size:14px;color:#aaa;line-height:1.7;margin-bottom:auto}
+
+.q-block{margin-bottom:1.1rem}
+.q-num{font-size:10px;color:#bbb;letter-spacing:.1em;margin-bottom:.35rem}
+.q-text{font-size:14px;color:#1a1a2e;font-weight:500;line-height:1.5;margin-bottom:.65rem}
 .opts{display:flex;flex-direction:column;gap:7px}
-.opt{background:#f8f8f6;border:1px solid #eee;border-radius:10px;padding:.65rem .9rem;font-size:14px;font-family:'DM Sans',sans-serif;color:#555;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;transition:all .15s}
-.opt:hover{border-color:#bbb;color:#1a1a1a;background:#fff}
-.opt.sel{background:#fff;border-color:#1a1a1a;color:#1a1a1a;font-weight:500}
-.opt-l{width:20px;height:20px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#888;flex-shrink:0;transition:all .15s}
-.opt.sel .opt-l{background:#1a1a1a;color:#fff}
-.score-bar{height:3px;background:#eee;border-radius:3px;margin:1rem 0 1.5rem;overflow:hidden}
-.score-fill{height:100%;border-radius:3px;background:#1a1a1a;transition:width .8s ease;width:0%}
-.res-text{font-size:15px;color:#555;line-height:1.8;font-weight:300;margin-bottom:1.5rem}
-.defi-card{background:#f8f8f6;border:1px solid #eee;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.5rem}
-.defi-text{font-size:14px;color:#1a1a1a;font-weight:500;line-height:1.5}
-.passe-card{background:#fff;border:1px solid #eee;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
-.passe-input-row{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
-.passe-input-row input{font-family:'DM Sans',sans-serif;font-size:14px;border-radius:10px;border:1px solid #ddd;padding:.65rem .9rem;color:#1a1a1a;background:#f8f8f6;width:100%}
-.mots-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:1rem}
-.mot-chip{background:#f8f8f6;border:1px solid #eee;border-radius:10px;padding:.55rem .7rem;font-size:13px;color:#555;cursor:pointer;text-align:center;transition:all .15s;font-family:'DM Sans',sans-serif}
-.mot-chip:hover{border-color:#bbb;color:#1a1a1a;background:#fff}
-.mot-chip.sel-chip{background:#fff;border-color:#1a1a1a;color:#1a1a1a;font-weight:500}
-.sent-icon{width:52px;height:52px;border-radius:50%;background:#f8f8f6;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
-.sent-word{font-family:'Playfair Display',serif;font-size:2rem;color:#1a1a1a;text-align:center;margin-bottom:.5rem}
-.sent-sub{font-size:14px;color:#777;text-align:center;line-height:1.6;margin-bottom:auto;white-space:pre-line}
-#screen-home{justify-content:flex-end;padding-bottom:3rem}
-.home-intro{margin-bottom:auto;padding-top:3rem}
-.home-from{font-size:13px;color:#aaa;margin-bottom:.5rem}
-.home-msg{font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a1a1a;line-height:1.3;margin-bottom:1rem}
-.home-word-badge{display:inline-block;background:#f8f8f6;border:1px solid #ddd;border-radius:100px;padding:.4rem 1rem;font-size:14px;color:#555;margin-bottom:1.5rem}
+.opt{background:#fff;border:1px solid #f0e8e0;border-radius:10px;padding:.65rem .9rem;font-size:13px;color:#777;display:flex;align-items:center;gap:9px;cursor:pointer;transition:all .15s;text-align:left}
+.opt:hover{border-color:#ddd;color:#1a1a2e}
+.opt.sel{border-color:#1a1a2e;color:#1a1a2e;font-weight:500;background:#fff}
+.opt-l{width:20px;height:20px;border-radius:50%;background:#f5f0eb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#bbb;flex-shrink:0;transition:all .15s}
+.opt.sel .opt-l{background:#1a1a2e;color:#fff}
+
+.score-bar{height:2px;background:#f0e8e0;border-radius:2px;margin:1rem 0 .5rem;overflow:hidden}
+.score-fill{height:100%;border-radius:2px;transition:width .8s ease;width:0%}
+.res-tag{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin-bottom:.4rem}
+.res-titre{font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a1a2e;margin-bottom:.2rem}
+.res-scores{font-size:11px;color:#ccc;margin-bottom:1rem}
+.res-text{font-size:14px;color:#888;line-height:1.8;font-weight:300;margin-bottom:1rem}
+.defi-card{background:#fff;border:1px solid #f0e8e0;border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.5rem}
+.defi-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;margin-bottom:.4rem}
+.defi-text{font-size:14px;color:#1a1a2e;font-weight:500;line-height:1.6}
+
+/* PASSE SCREEN */
+#screen-passe,#screen-envoi{background:#1a1a2e !important}
+.passe-eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:1rem}
+.passe-intro{font-family:'Playfair Display',serif;font-size:1.6rem;color:#f5f0eb;line-height:1.3;margin-bottom:.6rem}
+.passe-sub{font-size:13px;color:#666;line-height:1.65;margin-bottom:1.75rem}
+.passe-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#555;margin-bottom:.4rem}
+.passe-input{background:#252540;border:1px solid #333;border-radius:10px;padding:.7rem 1rem;font-size:14px;color:#f5f0eb;font-family:'DM Sans',sans-serif;width:100%;margin-bottom:.9rem}
+.passe-input::placeholder{color:#444}
+.mots-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:1.5rem}
+.mot-chip{background:#252540;border:1px solid #333;border-radius:9px;padding:.55rem .7rem;font-size:12px;color:#666;text-align:center;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.mot-chip:hover{border-color:#555;color:#aaa}
+.mot-chip.sel-chip{border-color:#e07a50;color:#e07a50;background:#2a2040}
+.btn-coral{background:#e07a50;color:#fff;border:none;border-radius:100px;padding:.85rem 1.5rem;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;width:100%;text-align:center;cursor:pointer;transition:opacity .15s}
+.btn-coral:hover{opacity:.88}
+.btn-ghost{background:transparent;color:#555;border:1px solid #333;border-radius:100px;padding:.75rem 1.5rem;font-size:14px;font-family:'DM Sans',sans-serif;width:100%;text-align:center;cursor:pointer}
+
+.sent-icon{width:48px;height:48px;border-radius:50%;background:#252540;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:20px}
+.sent-word{font-family:'Playfair Display',serif;font-size:2rem;color:#f5f0eb;text-align:center;margin-bottom:.4rem}
+.sent-sub{font-size:14px;color:#666;text-align:center;line-height:1.65;margin-bottom:auto;white-space:pre-line}
+.lien-box{background:#252540;border:1px solid #333;border-radius:12px;padding:1rem;margin-bottom:1rem}
+.lien-label{font-size:11px;color:#555;margin-bottom:.5rem}
+.lien-text{font-size:12px;color:#888;font-family:monospace;word-break:break-all;line-height:1.5}
+
+.choix-intro{font-size:14px;color:#aaa;line-height:1.65;margin-bottom:1.5rem}
+
+/* SIGNATURE */
+.signature{text-align:center;font-size:11px;color:#ccc;padding:.75rem 0;letter-spacing:.05em}
+
+/* MOTS CHOIX GRID */
+#choix-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:1rem}
+.choix-chip{background:#fff;border:1px solid #f0e8e0;border-radius:9px;padding:.55rem .7rem;font-size:12px;color:#888;text-align:center;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.choix-chip:hover{border-color:#ccc;color:#1a1a2e}
+.choix-chip.sel-chip{border-color:#1a1a2e;color:#1a1a2e;font-weight:500}
 </style>
 </head>
 <body>
 <div id="app">
 
-  <div id="screen-home" class="screen active">
-    <div class="home-intro">
-      <p class="home-from" id="home-from-label">Bienvenue</p>
-      <p class="home-msg" id="home-msg">Découvre un mot, fais le test, passe la balle.</p>
-      <div class="home-word-badge" id="home-badge">Donne-moi un mot</div>
-      <p style="font-size:14px;color:#777;line-height:1.6">Découvre ce que ça signifie pour toi, fais le test, puis passe la balle à quelqu'un.</p>
+  <div id="screen-home" class="screen col-terra active">
+    <div>
+      <p class="home-from" id="home-from"></p>
+      <p class="home-msg" id="home-msg"></p>
+      <div class="word-badge" id="home-badge"></div>
+      <p class="home-sub">Découvre ce que ça signifie pour toi, fais le test, puis passe la balle à quelqu'un qui compte.</p>
     </div>
     <div class="actions">
-      <button class="btn-main" onclick="goToMot()">Découvrir le mot <i class="ti ti-arrow-right"></i></button>
-      <button class="btn-soft" onclick="goToChoix()">Choisir mon propre mot</button>
+      <button class="btn-dark" onclick="goToMot()">Découvrir le mot →</button>
+      <button class="btn-light" onclick="goToChoix()">Choisir mon propre mot</button>
     </div>
+    <p class="signature">Un projet d'Adel Gastel</p>
   </div>
 
-  <div id="screen-choix" class="screen">
-    <button class="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i> Accueil</button>
-    <p class="lbl">Quel mot veux-tu explorer ?</p>
-    <p style="font-size:14px;color:#777;margin-bottom:1.5rem;line-height:1.6">Choisis un adjectif. Parce que tu penses qu'il te correspond — ou qu'il pourrait t'inspirer.</p>
-    <div class="mots-grid" id="choix-grid"></div>
+  <div id="screen-choix" class="screen col-terra">
+    <button class="back-btn" onclick="goHome()">← Accueil</button>
+    <p class="eyebrow">Choisir un mot</p>
+    <p class="home-msg" style="font-size:1.3rem;margin-bottom:.5rem">Quel mot offres-tu ?</p>
+    <p class="choix-intro">Choisis un adjectif pour toi — ou pour quelqu'un à qui tu penses.</p>
+    <div id="choix-grid"></div>
     <div class="actions" style="margin-top:auto">
-      <button class="btn-main" id="btn-choix-valider" onclick="validerChoix()" disabled style="opacity:.4;cursor:not-allowed">Continuer <i class="ti ti-arrow-right"></i></button>
+      <button class="btn-dark" id="btn-choix-valider" onclick="validerChoix()" disabled style="opacity:.4;cursor:not-allowed">Continuer →</button>
     </div>
   </div>
 
   <div id="screen-mot" class="screen">
-    <button class="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i> Accueil</button>
-    <p class="lbl">Ton mot</p>
-    <h2 class="big-word" id="mot-display"></h2>
-    <div class="divider"></div>
-    <p class="def-text" id="mot-def"></p>
+    <button class="back-btn" onclick="goHome()">← Accueil</button>
+    <p class="eyebrow">Ton mot</p>
+    <h1 class="word-big" id="mot-display"></h1>
+    <p class="word-form" id="mot-form"></p>
+    <div class="def-card">
+      <p class="def-text" id="mot-def"></p>
+    </div>
     <div class="actions">
-      <button class="btn-main" onclick="goToTest()">Faire le test <i class="ti ti-arrow-right"></i></button>
+      <button class="btn-dark" onclick="goToTest()">Faire le test →</button>
     </div>
   </div>
 
   <div id="screen-test" class="screen">
-    <button class="back-btn" onclick="goToMot()"><i class="ti ti-arrow-left"></i> Le mot</button>
-    <p class="lbl" id="test-lbl"></p>
-    <p style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#1a1a1a;margin-bottom:1.5rem" id="test-title"></p>
+    <button class="back-btn" onclick="goToMot()">← Le mot</button>
+    <p class="eyebrow" id="test-eyebrow"></p>
+    <p style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#1a1a2e;margin-bottom:1.25rem" id="test-title"></p>
     <div id="questions-container"></div>
     <div class="actions" style="margin-top:auto">
-      <button class="btn-main" id="btn-valider" onclick="validerTest()" disabled style="opacity:.4;cursor:not-allowed">Voir mon résultat</button>
+      <button class="btn-dark" id="btn-valider" onclick="validerTest()" disabled style="opacity:.4;cursor:not-allowed">Voir mon résultat</button>
     </div>
   </div>
 
   <div id="screen-resultat" class="screen">
-    <button class="back-btn" onclick="goToTest()"><i class="ti ti-arrow-left"></i> Le test</button>
-    <p class="lbl" id="res-lbl"></p>
-    <p style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#1a1a1a;margin-bottom:.2rem" id="res-titre"></p>
-    <p style="font-size:12px;color:#aaa;margin-bottom:.5rem" id="res-scores"></p>
+    <button class="back-btn" onclick="goToTest()">← Le test</button>
+    <p class="res-tag" id="res-tag"></p>
+    <p class="res-titre" id="res-titre"></p>
+    <p class="res-scores" id="res-scores"></p>
     <div class="score-bar"><div class="score-fill" id="score-fill"></div></div>
     <p class="res-text" id="res-text"></p>
     <div class="defi-card">
-      <p class="lbl">Ton défi du jour</p>
+      <p class="defi-label">Ton défi du jour</p>
       <p class="defi-text" id="defi-text"></p>
     </div>
     <div class="actions">
-      <button class="btn-main" onclick="goToPasse()">Passer la balle <i class="ti ti-send"></i></button>
-      <button class="btn-soft" onclick="goToChoix()">Recommencer avec un autre mot</button>
+      <button class="btn-dark" onclick="goToPasse()">Passer la balle →</button>
+      <button class="btn-light" onclick="goToChoix()">Essayer un autre mot</button>
     </div>
   </div>
 
   <div id="screen-passe" class="screen">
-    <button class="back-btn" onclick="goToResultat()"><i class="ti ti-arrow-left"></i> Mon résultat</button>
-    <p class="lbl">Passer la balle</p>
-    <div class="passe-card">
-      <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#1a1a1a;margin-bottom:.5rem">À qui veux-tu envoyer un mot ?</p>
-      <p style="font-size:13px;color:#777;line-height:1.5;margin-bottom:1rem">Choisis quelqu'un. Puis choisis le mot que tu lui offres.</p>
-      <div class="passe-input-row">
-        <input type="text" id="prenom-envoyeur" placeholder="Ton prénom" maxlength="30">
-        <input type="text" id="prenom-dest" placeholder="Prénom de la personne" maxlength="30">
-      </div>
-      <p style="font-size:12px;color:#aaa;margin-bottom:.75rem;letter-spacing:.1em;text-transform:uppercase">Choisis son mot</p>
-      <div class="mots-grid" id="passe-mots-grid"></div>
-    </div>
-    <div class="actions">
-      <button class="btn-main" id="btn-generer" onclick="genererLien()" disabled style="opacity:.4;cursor:not-allowed">Générer le lien <i class="ti ti-link"></i></button>
+    <button class="back-btn" style="color:#555" onclick="goToResultat()">← Mon résultat</button>
+    <p class="passe-eyebrow">Passer la balle</p>
+    <p class="passe-intro">À ton tour<br>d'offrir un mot.</p>
+    <p class="passe-sub">Pense à quelqu'un qui compte. Choisis le mot que tu veux lui offrir — parce que tu penses qu'il l'est, ou qu'il pourrait l'être.</p>
+    <input type="text" class="passe-input" id="prenom-envoyeur" placeholder="Ton prénom" maxlength="30">
+    <input type="text" class="passe-input" id="prenom-dest" placeholder="Son prénom" maxlength="30">
+    <p class="passe-label" style="margin-bottom:.75rem">Son mot</p>
+    <div class="mots-grid" id="passe-mots-grid"></div>
+    <div class="actions" style="margin-top:auto">
+      <button class="btn-coral" id="btn-generer" onclick="genererLien()" disabled style="opacity:.4;cursor:not-allowed">Générer le lien ↗</button>
     </div>
   </div>
 
   <div id="screen-envoi" class="screen">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 0">
-      <div class="sent-icon"><i class="ti ti-send" style="font-size:22px;color:#aaa"></i></div>
-      <p style="font-size:12px;color:#aaa;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">Le mot que tu envoies</p>
+      <div class="sent-icon">✉</div>
+      <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#555;margin-bottom:.5rem">Le mot que tu envoies</p>
       <p class="sent-word" id="envoi-mot"></p>
       <p class="sent-sub" id="envoi-sub"></p>
     </div>
-    <div style="background:#f8f8f6;border:1px solid #eee;border-radius:12px;padding:1rem;margin-bottom:1rem">
-      <p style="font-size:12px;color:#aaa;margin-bottom:.5rem">Lien à copier et envoyer</p>
-      <p style="font-size:13px;color:#1a1a1a;font-family:monospace;word-break:break-all;line-height:1.5" id="lien-display"></p>
+    <div class="lien-box">
+      <p class="lien-label">Lien à copier et envoyer</p>
+      <p class="lien-text" id="lien-display"></p>
     </div>
     <div class="actions">
-      <button class="btn-main" onclick="copierLien()"><i class="ti ti-copy"></i> <span id="btn-copier-txt">Copier le lien</span></button>
-      <button class="btn-soft" onclick="goToPasse()">Changer le destinataire</button>
+      <button class="btn-coral" onclick="copierLien()"><span id="btn-copier-txt">Copier le lien</span></button>
+      <button class="btn-ghost" onclick="goToPasse()">Changer le destinataire</button>
     </div>
   </div>
 
 </div>
+
 <script>
-const MOTS=[{mot:"Généreux",definition:"Être généreux, c'est partager volontairement ce que l'on possède : son temps, son attention, son énergie, ses ressources. <strong>La générosité ne se mesure pas à la richesse. Elle se mesure à l'envie de donner.</strong>",testTitle:"Es-tu vraiment généreux ?",questions:[{texte:"Un collègue ou un voisin a besoin d'un coup de main.",options:[{l:"Je propose mon aide spontanément.",s:"A"},{l:"J'aide si on me le demande.",s:"B"},{l:"Je préfère ne pas m'impliquer.",s:"C"}]},{texte:"Quelqu'un te raconte un problème.",options:[{l:"Je prends le temps de l'écouter pleinement.",s:"A"},{l:"J'écoute quelques minutes.",s:"B"},{l:"J'essaie de changer de sujet.",s:"C"}]},{texte:"Tu possèdes quelque chose dont tu n'as plus besoin.",options:[{l:"Je le donne volontiers.",s:"A"},{l:"Je réfléchis avant de donner.",s:"B"},{l:"Je préfère le conserver.",s:"C"}]}],resultats:{A:{titre:"Générosité affirmée",texte:"Tu partages naturellement. Les autres apprécient probablement ta présence et ton soutien sans condition.",defi:"Offre quelque chose que tu aimes à quelqu'un, sans occasion particulière.",pct:92},B:{titre:"Générosité en développement",texte:"Tu sais être généreux quand les circonstances s'y prêtent. De petits gestes quotidiens peuvent encore ouvrir ce chemin.",defi:"Cette semaine, propose ton aide avant qu'on te le demande.",pct:58},C:{titre:"Graine de générosité",texte:"La générosité est une compétence qui se cultive. Un geste simple aujourd'hui peut déjà faire une vraie différence.",defi:"Commence petit : donne quelque chose de ton temps à quelqu'un aujourd'hui.",pct:28}}},{mot:"Courageux",definition:"Le courage, ce n'est pas l'absence de peur. <strong>C'est agir malgré elle.</strong> Être courageux, c'est avancer vers ce qui est difficile ou incertain, par conviction plutôt que par obligation.",testTitle:"Es-tu vraiment courageux ?",questions:[{texte:"Face à une situation difficile qui te concerne directement.",options:[{l:"Je l'affronte, même si c'est inconfortable.",s:"A"},{l:"J'attends que ça se calme avant d'agir.",s:"B"},{l:"J'évite autant que possible.",s:"C"}]},{texte:"Quelqu'un dit quelque chose d'injuste devant toi.",options:[{l:"Je prends la parole, même seul contre tous.",s:"A"},{l:"Je réagis si les autres réagissent aussi.",s:"B"},{l:"Je me tais pour ne pas créer de vagues.",s:"C"}]},{texte:"Un projet important te fait peur.",options:[{l:"La peur m'indique que c'est important : je me lance.",s:"A"},{l:"Je commence prudemment, en testant.",s:"B"},{l:"Je le reporte jusqu'à me sentir prêt.",s:"C"}]}],resultats:{A:{titre:"Courage affirmé",texte:"Tu fais partie de ceux qui avancent même quand c'est difficile. Les autres te font confiance dans les moments importants.",defi:"Dis une vérité difficile, avec bienveillance, à quelqu'un qui en a besoin.",pct:90},B:{titre:"Courage en construction",texte:"Tu es courageux dans certains contextes, mais tu as parfois besoin d'un élan extérieur. Le courage se renforce par la pratique.",defi:"Prends cette semaine une décision que tu remettais à plus tard.",pct:55},C:{titre:"Graine de courage",texte:"La prudence est une qualité, mais elle peut parfois masquer une peur qu'on évite. Le courage s'apprend, un petit pas à la fois.",defi:"Fais aujourd'hui une chose qui te met légèrement hors de ta zone de confort.",pct:25}}},{mot:"Curieux",definition:"La curiosité, c'est cet appétit pour ce qu'on ne connaît pas encore. <strong>Un esprit curieux ne se contente pas des réponses — il aime les questions.</strong> C'est ce qui pousse à apprendre, explorer, s'étonner.",testTitle:"Es-tu vraiment curieux ?",questions:[{texte:"Tu tombes sur un sujet que tu ne connais pas du tout.",options:[{l:"Je cherche immédiatement à en savoir plus.",s:"A"},{l:"Je m'y intéresse si ça semble utile.",s:"B"},{l:"Je passe, ça ne me concerne pas.",s:"C"}]},{texte:"Quelqu'un te parle de sa passion, que tu ne partages pas.",options:[{l:"Je pose des questions sincères.",s:"A"},{l:"J'écoute poliment.",s:"B"},{l:"J'essaie de terminer la conversation.",s:"C"}]},{texte:"Tu as du temps libre inattendu.",options:[{l:"Je lis, j'explore, j'apprends quelque chose.",s:"A"},{l:"Je mélange détente et exploration.",s:"B"},{l:"Je me détends sans penser à apprendre.",s:"C"}]}],resultats:{A:{titre:"Curiosité vive",texte:"Tu as un appétit naturel pour le monde. Les gens autour de toi l'ont sûrement remarqué : tu poses les questions que les autres n'osent pas.",defi:"Apprends aujourd'hui quelque chose sur un sujet qui t'est totalement étranger.",pct:88},B:{titre:"Curiosité sélective",texte:"Ta curiosité s'active surtout quand quelque chose t'interpelle vraiment. C'est une forme efficace, que tu peux élargir.",defi:"Cette semaine, lis ou écoute quelque chose hors de tes sujets habituels.",pct:52},C:{titre:"Graine de curiosité",texte:"La curiosité s'apprivoise. Elle commence souvent par un seul sujet qui nous passionne, puis s'étend naturellement.",defi:"Pose aujourd'hui une vraie question à quelqu'un sur sa vie ou son métier.",pct:22}}},{mot:"Patient",definition:"La patience, c'est l'art de rester serein quand le temps s'étire. <strong>Être patient, c'est accepter que les bonnes choses prennent le temps qu'elles prennent</strong> — et continuer d'avancer sans se laisser consumer par l'urgence.",testTitle:"Es-tu vraiment patient ?",questions:[{texte:"Tu attends quelque chose depuis longtemps sans résultat.",options:[{l:"Je reste serein et confiant dans le processus.",s:"A"},{l:"Je m'impatiente, mais je tiens.",s:"B"},{l:"Je perds vite ma motivation.",s:"C"}]},{texte:"Quelqu'un met plus de temps que toi pour comprendre.",options:[{l:"Je prends le temps qu'il faut pour l'accompagner.",s:"A"},{l:"J'aide, mais une tension monte en moi.",s:"B"},{l:"Je finis par faire les choses à sa place.",s:"C"}]},{texte:"Un projet avance beaucoup plus lentement que prévu.",options:[{l:"Je m'adapte et recalibrate mes attentes.",s:"A"},{l:"Je cherche à accélérer, parfois trop.",s:"B"},{l:"Je ressens une frustration difficile à gérer.",s:"C"}]}],resultats:{A:{titre:"Patience affirmée",texte:"Tu laisses les choses se déployer à leur rythme. Cette qualité est profondément apaisante pour ceux qui t'entourent.",defi:"Laisse une conversation se terminer naturellement, sans la précipiter.",pct:86},B:{titre:"Patience en travail",texte:"Tu peux être patient, mais certaines situations ébranlent ta tranquillité. C'est humain — la patience se renforce avec la pratique consciente.",defi:"Identifie une situation où tu t'impatientes souvent, et observe-la autrement.",pct:50},C:{titre:"Graine de patience",texte:"L'impatience est souvent signe de passion. Canaliser cette énergie vers l'acceptation du rythme des autres est un beau défi.",defi:"Prends trois respirations profondes avant de réagir à une lenteur aujourd'hui.",pct:22}}},{mot:"Bienveillant",definition:"La bienveillance, c'est regarder les autres avec douceur, sans les juger pour ce qu'ils ne sont pas encore. <strong>C'est vouloir le bien de l'autre — même quand ça ne nous coûte rien, et même quand ça nous coûte quelque chose.</strong>",testTitle:"Es-tu vraiment bienveillant ?",questions:[{texte:"Quelqu'un fait une erreur devant toi.",options:[{l:"Je cherche d'abord à comprendre pourquoi.",s:"A"},{l:"Je corrige, parfois sèchement.",s:"B"},{l:"Je juge intérieurement, même si je ne dis rien.",s:"C"}]},{texte:"Une personne que tu n'aimes pas beaucoup traverse une période difficile.",options:[{l:"Je mets de côté mes a priori et je l'aide.",s:"A"},{l:"Je m'en préoccupe un peu, de loin.",s:"B"},{l:"Je reste indifférent.",s:"C"}]},{texte:"On te parle de quelqu'un que tu ne connais pas.",options:[{l:"Je lui accorde le bénéfice du doute.",s:"A"},{l:"Je reste neutre sans me forcer.",s:"B"},{l:"Je me forge vite une opinion négative.",s:"C"}]}],resultats:{A:{titre:"Bienveillance naturelle",texte:"Tu portes un regard doux sur les autres, même ceux qui ne le méritent pas toujours. C'est rare et précieux.",defi:"Dis quelque chose de sincèrement positif à quelqu'un que tu vois souvent.",pct:91},B:{titre:"Bienveillance intermittente",texte:"Tu es capable de bienveillance, mais elle n'est pas toujours ta première réaction. Un peu de pratique consciente peut changer ça.",defi:"Avant de juger quelqu'un aujourd'hui, imagine une raison qui l'excuse.",pct:54},C:{titre:"Graine de bienveillance",texte:"Le jugement rapide protège, mais il éloigne. La bienveillance s'apprend en s'interrogeant sur ses propres réactions.",defi:"Observe sans juger une personne que tu aurais tendance à critiquer.",pct:24}}},{mot:"Créatif",definition:"La créativité, ce n'est pas réservé aux artistes. <strong>C'est la capacité à voir les choses autrement, à trouver une solution là où les autres voient un mur.</strong> C'est jouer avec le monde plutôt que de le subir.",testTitle:"Es-tu vraiment créatif ?",questions:[{texte:"Face à un problème sans solution évidente.",options:[{l:"Je cherche des approches inattendues.",s:"A"},{l:"Je teste plusieurs options classiques.",s:"B"},{l:"J'attends que quelqu'un d'autre trouve.",s:"C"}]},{texte:"Quand tu as du temps non structuré.",options:[{l:"Je crée quelque chose : j'écris, je construis, j'invente.",s:"A"},{l:"Je consomme du contenu qui m'inspire.",s:"B"},{l:"Je ne sais pas quoi en faire.",s:"C"}]},{texte:"Quelqu'un te dit que ton idée est impossible.",options:[{l:"Ça m'encourage à chercher comment la rendre possible.",s:"A"},{l:"Je l'écoute et je revois mon idée.",s:"B"},{l:"J'abandonne assez vite.",s:"C"}]}],resultats:{A:{titre:"Créativité affirmée",texte:"Tu vois des possibilités là où les autres voient des obstacles. Cette façon d'habiter le monde est un vrai cadeau.",defi:"Crée quelque chose aujourd'hui — même petit, même imparfait.",pct:89},B:{titre:"Créativité en éveil",texte:"Tu as une sensibilité créative, mais elle s'exprime surtout en réaction. En lui donnant plus d'espace, elle peut s'épanouir.",defi:"Essaie de résoudre un problème du quotidien de façon inhabituelle.",pct:53},C:{titre:"Graine de créativité",texte:"La créativité sommeille souvent sous les habitudes. Un seul geste différent peut la réveiller.",defi:"Fais quelque chose que tu n'as jamais fait, même quelque chose de très simple.",pct:23}}}];
+const FAMILLES = {
+  terra:["Généreux(se)","Bienveillant(e)","Empathique","Solidaire","Attentif(ve)"],
+  blue:["Courageux(se)","Audacieux(se)","Déterminé(e)","Persévérant(e)","Fiable"],
+  sage:["Patient(e)","Calme","Sage","Flexible","Humble"],
+  rose:["Curieux(se)","Créatif(ve)","Enthousiaste","Inspirant(e)","Ouvert(e)"],
+  gold:["Reconnaissant(e)","Optimiste","Authentique","Loyal(e)","Sincère"],
+  plum:["Juste","Respectueux(se)","Tolérant(e)","Responsable","Discipliné(e)"]
+};
+
+const ACC = {terra:"acc-terra",blue:"acc-blue",sage:"acc-sage",rose:"acc-rose",gold:"acc-gold",plum:"acc-plum"};
+const BG = {terra:"col-terra",blue:"col-blue",sage:"col-sage",rose:"col-rose",gold:"col-gold",plum:"col-plum"};
+const FILL = {terra:"#c26940",blue:"#2a6fa8",sage:"#3a7a52",rose:"#b84d7a",gold:"#a07020",plum:"#6a3a9a"};
+const DOTS = {terra:"#e07a50",blue:"#4a8fc8",sage:"#5a9a72",rose:"#d86d9a",gold:"#c09040",plum:"#8a5aba"};
+
+function getFamille(mot){
+  for(const[f,mots] of Object.entries(FAMILLES)){
+    if(mots.includes(mot)) return f;
+  }
+  return "terra";
+}
+
+function getMotBase(mot){
+  return mot.split("(")[0].trim();
+}
+function getMotForm(mot){
+  const m = mot.match(/\(([^)]+)\)/);
+  return m ? "("+m[1]+")" : "";
+}
+
+const MOTS=[{mot:"Généreux(se)",definition:"Être généreux(se), c'est partager volontairement ce que l'on possède : son temps, son attention, son énergie, ses ressources. <strong>La générosité ne se mesure pas à la richesse. Elle se mesure à l'envie de donner.</strong>",testTitle:"Es-tu vraiment généreux(se) ?",questions:[{texte:"Un collègue ou un voisin a besoin d'un coup de main.",options:[{l:"Je propose mon aide spontanément.",s:"A"},{l:"J'aide si on me le demande.",s:"B"},{l:"J'évalue d'abord si j'ai l'énergie pour ça.",s:"C"}]},{texte:"Quelqu'un te raconte un problème.",options:[{l:"Je prends le temps de l'écouter pleinement.",s:"A"},{l:"J'écoute quelques minutes.",s:"B"},{l:"J'écoute, mais une partie de moi pense à autre chose.",s:"C"}]},{texte:"Tu possèdes quelque chose dont tu n'as plus besoin.",options:[{l:"Je le donne volontiers.",s:"A"},{l:"Je réfléchis avant de donner.",s:"B"},{l:"Je le garde — on ne sait jamais.",s:"C"}]}],resultats:{A:{titre:"Générosité affirmée",texte:"Tu partages naturellement. Les autres apprécient ta présence et ton soutien sans condition.",defi:"Offre quelque chose que tu aimes à quelqu'un, sans occasion particulière.",pct:92},B:{titre:"Générosité en développement",texte:"Tu sais être généreux(se) quand les circonstances s'y prêtent. De petits gestes quotidiens peuvent encore ouvrir ce chemin.",defi:"Cette semaine, propose ton aide avant qu'on te le demande.",pct:58},C:{titre:"Graine de générosité",texte:"Tu gères ton énergie avec soin — c'est une forme d'intelligence. Mais il y a des moments où donner un peu plus te surprendrait agréablement.",defi:"Commence petit : donne quelque chose de ton temps à quelqu'un aujourd'hui.",pct:28}}},{mot:"Courageux(se)",definition:"Le courage, ce n'est pas l'absence de peur. <strong>C'est agir malgré elle.</strong> Être courageux(se), c'est avancer vers ce qui est difficile ou incertain, par conviction plutôt que par obligation.",testTitle:"Es-tu vraiment courageux(se) ?",questions:[{texte:"Face à une situation difficile qui te concerne directement.",options:[{l:"Je l'affronte, même si c'est inconfortable.",s:"A"},{l:"J'attends que ça se calme avant d'agir.",s:"B"},{l:"Je laisse le temps faire les choses.",s:"C"}]},{texte:"Quelqu'un dit quelque chose d'injuste devant toi.",options:[{l:"Je prends la parole, même seul(e) contre tous.",s:"A"},{l:"Je réagis si les autres réagissent aussi.",s:"B"},{l:"Je le note intérieurement, mais je ne dis rien.",s:"C"}]},{texte:"Un projet important te fait peur.",options:[{l:"La peur m'indique que c'est important : je me lance.",s:"A"},{l:"Je commence prudemment, en testant.",s:"B"},{l:"J'attends d'être vraiment prêt(e) avant de commencer.",s:"C"}]}],resultats:{A:{titre:"Courage affirmé",texte:"Tu fais partie de ceux et celles qui avancent même quand c'est difficile. Les autres te font confiance dans les moments importants.",defi:"Dis une vérité difficile, avec bienveillance, à quelqu'un qui en a besoin.",pct:90},B:{titre:"Courage en construction",texte:"Tu es courageux(se) dans certains contextes, mais tu as parfois besoin d'un élan extérieur. Le courage se renforce par la pratique.",defi:"Prends cette semaine une décision que tu remettais à plus tard.",pct:55},C:{titre:"Graine de courage",texte:"Attendre le bon moment est parfois sage — mais parfois c'est une façon d'éviter l'inconfort. La question : est-ce de la prudence ou de la peur ?",defi:"Fais aujourd'hui une chose qui te met légèrement hors de ta zone de confort.",pct:25}}},{mot:"Patient(e)",definition:"La patience, c'est l'art de rester serein(e) quand le temps s'étire. <strong>Être patient(e), c'est accepter que les bonnes choses prennent le temps qu'elles prennent</strong> — et continuer d'avancer sans se laisser consumer par l'urgence.",testTitle:"Es-tu vraiment patient(e) ?",questions:[{texte:"Tu attends quelque chose depuis longtemps sans résultat.",options:[{l:"Je reste serein(e) et confiant(e) dans le processus.",s:"A"},{l:"Je m'impatiente, mais je tiens.",s:"B"},{l:"Je commence à chercher des raccourcis.",s:"C"}]},{texte:"Quelqu'un met plus de temps que toi pour comprendre.",options:[{l:"Je prends le temps qu'il faut pour l'accompagner.",s:"A"},{l:"J'aide, mais une tension monte en moi.",s:"B"},{l:"Je simplifie pour aller plus vite.",s:"C"}]},{texte:"Un projet avance beaucoup plus lentement que prévu.",options:[{l:"Je m'adapte et recalibrate mes attentes.",s:"A"},{l:"Je cherche à accélérer, parfois trop.",s:"B"},{l:"Je me demande si ça vaut encore la peine de continuer.",s:"C"}]}],resultats:{A:{titre:"Patience affirmée",texte:"Tu laisses les choses se déployer à leur rythme. Cette qualité est profondément apaisante pour ceux qui t'entourent.",defi:"Laisse une conversation se terminer naturellement, sans la précipiter.",pct:86},B:{titre:"Patience en travail",texte:"Tu peux être patient(e), mais certaines situations ébranlent ta tranquillité. La patience se renforce avec la pratique consciente.",defi:"Identifie une situation où tu t'impatientes souvent, et observe-la autrement.",pct:50},C:{titre:"Graine de patience",texte:"Chercher l'efficacité est une qualité — mais elle peut parfois court-circuiter ce qui demande du temps. Certaines choses ne se précipitent pas.",defi:"Prends trois respirations profondes avant de réagir à une lenteur aujourd'hui.",pct:22}}},{mot:"Loyal(e)",definition:"La loyauté, c'est tenir ses engagements même quand personne ne regarde. <strong>Être loyal(e), c'est être la même personne en public et en privé</strong> — fidèle à sa parole, à ses valeurs, et aux gens qui comptent.",testTitle:"Es-tu vraiment loyal(e) ?",questions:[{texte:"Quelqu'un que tu apprécies est critiqué en son absence.",options:[{l:"Je prends sa défense ou je me tais.",s:"A"},{l:"J'écoute sans vraiment intervenir.",s:"B"},{l:"Je participe à la conversation — tout le monde le fait.",s:"C"}]},{texte:"Tu as promis quelque chose mais c'est devenu compliqué.",options:[{l:"Je tiens ma promesse, quoi qu'il en coûte.",s:"A"},{l:"Je cherche un compromis honnête.",s:"B"},{l:"Je revois les termes — les circonstances ont changé.",s:"C"}]},{texte:"Tu découvres que quelqu'un de proche a fait une erreur.",options:[{l:"Je lui en parle directement, sans le trahir.",s:"A"},{l:"J'hésite entre lui dire et laisser passer.",s:"B"},{l:"Je demande conseil à quelqu'un de confiance d'abord.",s:"C"}]}],resultats:{A:{titre:"Loyauté profonde",texte:"Tu es quelqu'un sur qui on peut vraiment compter. Cette qualité est rare et précieuse — les gens autour de toi le savent.",defi:"Dis à quelqu'un de proche pourquoi tu lui es fidèle(e).",pct:93},B:{titre:"Loyauté en construction",texte:"Tu as de bonnes intentions, mais la loyauté demande parfois de dépasser son confort. Tu es sur la bonne voie.",defi:"Cette semaine, tiens une promesse que tu aurais pu facilement oublier.",pct:57},C:{titre:"Graine de loyauté",texte:"S'adapter aux circonstances est humain — mais la loyauté tient justement quand c'est difficile. C'est là qu'elle prend tout son sens.",defi:"Aujourd'hui, fais ce que tu as dit que tu ferais — même une petite chose.",pct:25}}},{mot:"Sincère",definition:"La sincérité, c'est dire ce qu'on pense et penser ce qu'on dit. <strong>Être sincère, c'est choisir la vérité même quand le mensonge serait plus confortable</strong> — pour soi et pour les autres.",testTitle:"Es-tu vraiment sincère ?",questions:[{texte:"Quelqu'un te demande ton avis sur quelque chose qui ne te plaît pas.",options:[{l:"Je dis ce que je pense, avec tact.",s:"A"},{l:"J'adoucis tellement que ce n'est plus vraiment mon avis.",s:"B"},{l:"Je trouve ce qui me plaît pour ne pas blesser.",s:"C"}]},{texte:"Tu as fait une erreur que personne n'a remarquée.",options:[{l:"Je l'admets quand même.",s:"A"},{l:"J'attends de voir si ça se voit.",s:"B"},{l:"Je tourne la page — ça n'a pas eu de conséquences.",s:"C"}]},{texte:"Dans une conversation, tu exagères parfois pour convaincre.",options:[{l:"Non, je reste toujours précis(e).",s:"A"},{l:"Rarement, mais ça arrive.",s:"B"},{l:"Oui — une bonne histoire a besoin d'un peu de relief.",s:"C"}]}],resultats:{A:{titre:"Sincérité affirmée",texte:"Tu as le courage de la vérité. Les gens qui te connaissent savent qu'ils peuvent te faire confiance.",defi:"Dis aujourd'hui quelque chose de vrai que tu gardais pour toi.",pct:91},B:{titre:"Sincérité nuancée",texte:"Tu es sincère, mais la peur de blesser t'amène parfois à te censurer. C'est humain — et ça se travaille.",defi:"Cette semaine, donne un avis honnête à quelqu'un qui te le demande vraiment.",pct:55},C:{titre:"Graine de sincérité",texte:"Protéger les autres — ou soi-même — avec de petits arrangements est naturel. Mais la vraie confiance se construit sur la vérité, même imparfaite.",defi:"Reconnais aujourd'hui une petite erreur — même intérieurement.",pct:24}}},{mot:"Bienveillant(e)",definition:"La bienveillance, c'est regarder les autres avec douceur, sans les juger pour ce qu'ils ne sont pas encore. <strong>C'est vouloir le bien de l'autre — même quand ça ne nous coûte rien, et même quand ça nous coûte quelque chose.</strong>",testTitle:"Es-tu vraiment bienveillant(e) ?",questions:[{texte:"Quelqu'un fait une erreur devant toi.",options:[{l:"Je cherche d'abord à comprendre pourquoi.",s:"A"},{l:"Je corrige, parfois sèchement.",s:"B"},{l:"Je remarque, mais je garde mon avis pour moi.",s:"C"}]},{texte:"Une personne que tu n'apprécies pas beaucoup traverse une période difficile.",options:[{l:"Je mets de côté mes a priori et je l'aide.",s:"A"},{l:"Je m'en préoccupe un peu, de loin.",s:"B"},{l:"Je laisse les gens plus proches d'elle s'en occuper.",s:"C"}]},{texte:"On te parle de quelqu'un que tu ne connais pas.",options:[{l:"Je lui accorde le bénéfice du doute.",s:"A"},{l:"Je reste neutre sans me forcer.",s:"B"},{l:"Je me fais une idée à partir de ce qu'on m'en dit.",s:"C"}]}],resultats:{A:{titre:"Bienveillance naturelle",texte:"Tu portes un regard doux sur les autres, même ceux qui ne le méritent pas toujours. C'est rare et précieux.",defi:"Dis quelque chose de sincèrement positif à quelqu'un que tu vois souvent.",pct:91},B:{titre:"Bienveillance intermittente",texte:"Tu es capable de bienveillance, mais elle n'est pas toujours ta première réaction. Un peu de pratique consciente peut changer ça.",defi:"Avant de juger quelqu'un aujourd'hui, imagine une raison qui l'excuse.",pct:54},C:{titre:"Graine de bienveillance",texte:"Se faire une idée rapidement est naturel — mais les premières impressions ratent souvent l'essentiel. La bienveillance commence par suspendre ce réflexe.",defi:"Observe sans juger une personne que tu aurais tendance à évaluer rapidement.",pct:24}}},{mot:"Curieux(se)",definition:"La curiosité, c'est cet appétit pour ce qu'on ne connaît pas encore. <strong>Un esprit curieux ne se contente pas des réponses — il aime les questions.</strong> C'est ce qui pousse à apprendre, explorer, s'étonner.",testTitle:"Es-tu vraiment curieux(se) ?",questions:[{texte:"Tu tombes sur un sujet que tu ne connais pas du tout.",options:[{l:"Je cherche immédiatement à en savoir plus.",s:"A"},{l:"Je m'y intéresse si ça semble utile.",s:"B"},{l:"Je passe — j'ai déjà beaucoup à traiter.",s:"C"}]},{texte:"Quelqu'un te parle de sa passion, que tu ne partages pas.",options:[{l:"Je pose des questions sincères.",s:"A"},{l:"J'écoute poliment.",s:"B"},{l:"J'attends qu'on revienne à un sujet qui me parle.",s:"C"}]},{texte:"Tu as du temps libre inattendu.",options:[{l:"Je lis, j'explore, j'apprends quelque chose.",s:"A"},{l:"Je mélange détente et exploration.",s:"B"},{l:"Je me détends — j'en ai besoin.",s:"C"}]}],resultats:{A:{titre:"Curiosité vive",texte:"Tu as un appétit naturel pour le monde. Les gens autour de toi l'ont sûrement remarqué : tu poses les questions que les autres n'osent pas.",defi:"Apprends aujourd'hui quelque chose sur un sujet qui t'est totalement étranger.",pct:88},B:{titre:"Curiosité sélective",texte:"Ta curiosité s'active surtout quand quelque chose t'interpelle vraiment. C'est une forme efficace, que tu peux élargir.",defi:"Cette semaine, lis ou écoute quelque chose hors de tes sujets habituels.",pct:52},C:{titre:"Graine de curiosité",texte:"Se reposer et se concentrer sur ce qu'on connaît est légitime. Mais un seul sujet nouveau par semaine peut ouvrir des horizons inattendus.",defi:"Pose aujourd'hui une vraie question à quelqu'un sur sa vie ou son métier.",pct:22}}},{mot:"Créatif(ve)",definition:"La créativité, ce n'est pas réservé aux artistes. <strong>C'est la capacité à voir les choses autrement, à trouver une solution là où les autres voient un mur.</strong> C'est jouer avec le monde plutôt que de le subir.",testTitle:"Es-tu vraiment créatif(ve) ?",questions:[{texte:"Face à un problème sans solution évidente.",options:[{l:"Je cherche des approches inattendues.",s:"A"},{l:"Je teste plusieurs options classiques.",s:"B"},{l:"Je cherche quelqu'un qui a déjà résolu ce problème.",s:"C"}]},{texte:"Quand tu as du temps non structuré.",options:[{l:"Je crée quelque chose : j'écris, je construis, j'invente.",s:"A"},{l:"Je consomme du contenu qui m'inspire.",s:"B"},{l:"Je me repose — la créativité viendra quand je serai frais(fraîche).",s:"C"}]},{texte:"Quelqu'un te dit que ton idée est impossible.",options:[{l:"Ça m'encourage à chercher comment la rendre possible.",s:"A"},{l:"Je l'écoute et je revois mon idée.",s:"B"},{l:"Je prends le temps d'évaluer si c'est vraiment faisable.",s:"C"}]}],resultats:{A:{titre:"Créativité affirmée",texte:"Tu vois des possibilités là où les autres voient des obstacles. Cette façon d'habiter le monde est un vrai cadeau.",defi:"Crée quelque chose aujourd'hui — même petit, même imparfait.",pct:89},B:{titre:"Créativité en éveil",texte:"Tu as une sensibilité créative, mais elle s'exprime surtout en réaction. En lui donnant plus d'espace, elle peut s'épanouir.",defi:"Essaie de résoudre un problème du quotidien de façon inhabituelle.",pct:53},C:{titre:"Graine de créativité",texte:"S'appuyer sur ce qui existe et attendre le bon moment sont des réflexes raisonnables — mais la créativité naît souvent dans l'inconfort et l'imperfection.",defi:"Fais quelque chose sans attendre d'être prêt(e) — commence maintenant.",pct:23}}},{mot:"Persévérant(e)",definition:"La persévérance, c'est continuer quand tout invite à s'arrêter. <strong>Être persévérant(e), ce n'est pas ne jamais douter — c'est douter et continuer quand même.</strong>",testTitle:"Es-tu vraiment persévérant(e) ?",questions:[{texte:"Un projet que tu mènes depuis longtemps n'avance plus.",options:[{l:"Je cherche un nouveau souffle et je continue.",s:"A"},{l:"Je fais une pause et j'évalue.",s:"B"},{l:"Je me demande si mon énergie ne serait pas mieux ailleurs.",s:"C"}]},{texte:"Tu échoues plusieurs fois au même endroit.",options:[{l:"Chaque échec m'apprend quelque chose d'utile.",s:"A"},{l:"Je me décourage un peu, mais je reprends.",s:"B"},{l:"Je reconsidère si c'est vraiment la bonne direction.",s:"C"}]},{texte:"Quelqu'un te dit que ton objectif est irréaliste.",options:[{l:"Je l'écoute, mais je ne laisse pas ça m'arrêter.",s:"A"},{l:"Je remets en question mon objectif.",s:"B"},{l:"Je prends ça comme une information utile à intégrer.",s:"C"}]}],resultats:{A:{titre:"Persévérance solide",texte:"Tu as cette capacité rare de tenir le cap même dans les moments difficiles. Les autres admirent ta constance.",defi:"Reprends aujourd'hui un projet que tu avais mis de côté.",pct:90},B:{titre:"Persévérance en développement",texte:"Tu persévères, mais tu as besoin de te ressourcer régulièrement. C'est une force, pas une faiblesse.",defi:"Cette semaine, avance d'un seul petit pas sur quelque chose de difficile.",pct:56},C:{titre:"Graine de persévérance",texte:"Remettre en question est intelligent — mais il y a une différence entre pivoter avec sagesse et abandonner par peur de l'effort.",defi:"Fixe-toi un micro-objectif aujourd'hui et tiens-le jusqu'au bout.",pct:24}}},{mot:"Humble",definition:"L'humilité, ce n'est pas se diminuer. <strong>C'est voir les choses à leur juste taille — ni se surestimer, ni s'effacer.</strong> L'humble sait ce qu'il sait, et sait aussi ce qu'il ne sait pas.",testTitle:"Es-tu vraiment humble ?",questions:[{texte:"Quelqu'un te fait une critique constructive.",options:[{l:"Je l'écoute vraiment et j'en tire quelque chose.",s:"A"},{l:"Je l'accepte en surface, mais ça pique.",s:"B"},{l:"J'écoute, puis j'explique mon point de vue.",s:"C"}]},{texte:"Tu réussis quelque chose d'important.",options:[{l:"Je reconnais aussi la part des autres dans ce succès.",s:"A"},{l:"Je suis fier(ère) mais je le garde pour moi.",s:"B"},{l:"Je le partage — les bonnes nouvelles méritent d'être célébrées.",s:"C"}]},{texte:"Quelqu'un connaît mieux un sujet que toi.",options:[{l:"Je l'écoute avec intérêt et j'apprends.",s:"A"},{l:"J'écoute, mais je cherche aussi à placer ce que je sais.",s:"B"},{l:"J'apporte ma perspective — le dialogue enrichit tout le monde.",s:"C"}]}],resultats:{A:{titre:"Humilité vraie",texte:"Tu as la rare capacité de te voir sans te juger. Cela te rend à la fois solide et ouvert(e) aux autres.",defi:"Remercie aujourd'hui quelqu'un qui t'a aidé(e) à progresser.",pct:88},B:{titre:"Humilité en chemin",texte:"Tu as les bases de l'humilité, mais l'ego intervient encore parfois. C'est normal — la conscience de ça est déjà un grand pas.",defi:"Laisse quelqu'un finir son idée aujourd'hui sans l'interrompre.",pct:54},C:{titre:"Graine d'humilité",texte:"Partager et dialoguer sont de belles choses — mais parfois, écouter sans répondre est le plus grand cadeau qu'on puisse faire.",defi:"Dis 'je ne sais pas' à quelque chose aujourd'hui, sincèrement.",pct:23}}},{mot:"Audacieux(se)",definition:"L'audace, c'est oser là où d'autres hésitent. <strong>Être audacieux(se), c'est prendre des risques calculés, sortir des sentiers battus</strong> — non par imprudence, mais par conviction que ça en vaut la peine.",testTitle:"Es-tu vraiment audacieux(se) ?",questions:[{texte:"Une opportunité se présente, mais elle comporte des risques.",options:[{l:"Je l'évalue rapidement et je saute si ça me parle.",s:"A"},{l:"J'analyse longuement avant de me décider.",s:"B"},{l:"Je prends le temps de bien mesurer ce que je pourrais perdre.",s:"C"}]},{texte:"Tu as une idée originale dans un groupe.",options:[{l:"Je la propose sans hésiter.",s:"A"},{l:"Je la partage si l'ambiance s'y prête.",s:"B"},{l:"Je l'affine encore un peu avant de la soumettre.",s:"C"}]},{texte:"Tu dois choisir entre le connu et l'inconnu.",options:[{l:"L'inconnu m'attire — c'est là que tout se passe.",s:"A"},{l:"Je préfère l'inconnu si j'ai quelques garanties.",s:"B"},{l:"Je choisis ce que je connais — mieux vaut un tien que deux tu l'auras.",s:"C"}]}],resultats:{A:{titre:"Audace affirmée",texte:"Tu n'attends pas que la vie vienne à toi — tu vas à elle. Cette énergie est contagieuse et inspire les autres.",defi:"Propose aujourd'hui une idée que tu n'aurais pas osé soumettre hier.",pct:91},B:{titre:"Audace mesurée",texte:"Tu oses, mais avec prudence. C'est une forme d'intelligence — veille juste à ce que la prudence ne devienne pas de la peur.",defi:"Cette semaine, fais un choix sans attendre d'avoir toutes les garanties.",pct:55},C:{titre:"Graine d'audace",texte:"La prudence est une vraie valeur — mais elle peut parfois nous priver de ce qui aurait changé notre vie. Une prise de risque mesurée de temps en temps fait du bien.",defi:"Fais aujourd'hui quelque chose que tu repousses depuis trop longtemps.",pct:24}}},{mot:"Respectueux(se)",definition:"Le respect, c'est reconnaître la valeur de l'autre — même quand on ne partage pas ses idées, ses choix ou son mode de vie. <strong>Respecter, c'est traiter chacun comme une fin en soi, jamais comme un moyen.</strong>",testTitle:"Es-tu vraiment respectueux(se) ?",questions:[{texte:"Quelqu'un exprime une opinion très différente de la tienne.",options:[{l:"Je l'écoute sans l'interrompre, même si je ne suis pas d'accord.",s:"A"},{l:"J'écoute, mais j'ai du mal à ne pas couper.",s:"B"},{l:"J'attends mon tour pour expliquer pourquoi je vois les choses autrement.",s:"C"}]},{texte:"Tu interagis avec quelqu'un qui a moins d'expérience que toi.",options:[{l:"Je lui parle comme à un égal.",s:"A"},{l:"Je suis patient(e) mais parfois condescendant(e) sans le vouloir.",s:"B"},{l:"Je simplifie pour que ce soit plus accessible.",s:"C"}]},{texte:"Quelqu'un fait quelque chose qui te dérange.",options:[{l:"Je lui en parle calmement et directement.",s:"A"},{l:"Je le dis, mais avec plus d'émotion que nécessaire.",s:"B"},{l:"Je préfère éviter le conflit et m'adapter.",s:"C"}]}],resultats:{A:{titre:"Respect profond",texte:"Tu traites les autres comme tu aimerais être traité(e). Cette qualité crée des relations solides et durables.",defi:"Aujourd'hui, écoute quelqu'un jusqu'au bout sans préparer ta réponse.",pct:89},B:{titre:"Respect en progression",texte:"Tu as de bonnes intentions, mais certains réflexes peuvent blesser sans le vouloir. La conscience de ça est déjà beaucoup.",defi:"Cette semaine, repère un moment où tu aurais pu écouter plus longtemps.",pct:54},C:{titre:"Graine de respect",texte:"Simplifier et éviter le conflit sont des intentions bienveillantes — mais elles peuvent aussi priver l'autre d'une vraie rencontre.",defi:"Avant de répondre à quelqu'un aujourd'hui, répète intérieurement ce qu'il vient de dire.",pct:22}}},{mot:"Tolérant(e)",definition:"La tolérance, c'est accepter que les autres soient différents — non pas les supporter, mais les accueillir. <strong>Être tolérant(e), c'est comprendre que la diversité est une richesse, pas une menace.</strong>",testTitle:"Es-tu vraiment tolérant(e) ?",questions:[{texte:"Tu rencontres quelqu'un dont le mode de vie est très différent du tien.",options:[{l:"Je suis curieux(se) et ouvert(e).",s:"A"},{l:"Je suis neutre, sans vraiment m'y intéresser.",s:"B"},{l:"Je respecte ses choix, même si je ne les comprends pas.",s:"C"}]},{texte:"Dans une discussion, quelqu'un défend une position que tu trouves absurde.",options:[{l:"Je cherche à comprendre d'où ça vient.",s:"A"},{l:"Je reste poli(e) mais je n'écoute pas vraiment.",s:"B"},{l:"Je lui montre poliment que je ne suis pas convaincu(e).",s:"C"}]},{texte:"Quelqu'un fait des choix de vie que tu n'approuves pas.",options:[{l:"Ce sont ses choix — je les respecte.",s:"A"},{l:"Je garde mon avis pour moi mais ça me perturbe.",s:"B"},{l:"Si on me demande, je donne mon avis honnêtement.",s:"C"}]}],resultats:{A:{titre:"Tolérance ouverte",texte:"Tu accueilles la différence avec curiosité. C'est une qualité qui enrichit tes relations et ton regard sur le monde.",defi:"Engage aujourd'hui une vraie conversation avec quelqu'un de très différent de toi.",pct:87},B:{titre:"Tolérance passive",texte:"Tu ne juges pas ouvertement, mais tu restes distant(e) face à ce qui est différent. La tolérance active, ça s'apprend.",defi:"Cette semaine, pose une question sincère à quelqu'un dont tu ne comprends pas les choix.",pct:52},C:{titre:"Graine de tolérance",texte:"Respecter sans comprendre est déjà bien — et partager son avis honnêtement aussi. La tolérance ne demande pas le silence, mais l'ouverture.",defi:"Aujourd'hui, écoute un point de vue opposé au tien sans chercher à convaincre.",pct:22}}},{mot:"Reconnaissant(e)",definition:"La gratitude, c'est voir ce qui est là plutôt que ce qui manque. <strong>Être reconnaissant(e), c'est remarquer les gestes, les présences, les chances — et ne pas les tenir pour acquis.</strong>",testTitle:"Es-tu vraiment reconnaissant(e) ?",questions:[{texte:"Quelqu'un t'a rendu service, même petit.",options:[{l:"Je le remarque et je l'exprime sincèrement.",s:"A"},{l:"Je dis merci, mais rapidement.",s:"B"},{l:"Je note mentalement que je lui rendrai la pareille.",s:"C"}]},{texte:"Tu traverses une période difficile.",options:[{l:"Je trouve quand même des choses pour lesquelles être reconnaissant(e).",s:"A"},{l:"C'est difficile, mais j'essaie d'y penser.",s:"B"},{l:"Je gère le présent — la gratitude attendra des jours meilleurs.",s:"C"}]},{texte:"Tu penses à ta vie en ce moment.",options:[{l:"Je vois surtout ce que j'ai de précieux.",s:"A"},{l:"Je vois les deux — les biens et les manques.",s:"B"},{l:"Je pense surtout à ce que je veux encore accomplir.",s:"C"}]}],resultats:{A:{titre:"Gratitude naturelle",texte:"Tu sais voir ce qui est précieux dans ta vie. Cette qualité te rend plus heureux(se) et plus agréable à vivre.",defi:"Dis aujourd'hui merci à quelqu'un pour quelque chose que tu tiens habituellement pour acquis.",pct:90},B:{titre:"Gratitude en éveil",texte:"Tu as conscience de ce que tu as, mais la gratitude n'est pas encore un réflexe naturel. Elle se cultive, comme un muscle.",defi:"Ce soir, note trois choses pour lesquelles tu es reconnaissant(e) aujourd'hui.",pct:55},C:{titre:"Graine de gratitude",texte:"Être tourné(e) vers l'avenir est une belle énergie — mais s'arrêter un instant sur ce qu'on a déjà change profondément le rapport au bonheur.",defi:"Pense à une personne dans ta vie et liste trois choses qu'elle t'apporte.",pct:24}}},{mot:"Optimiste",definition:"L'optimisme, ce n'est pas nier les difficultés. <strong>C'est croire qu'elles sont surmontables.</strong> L'optimiste ne voit pas le monde en rose — il voit les possibilités là où d'autres ne voient que des obstacles.",testTitle:"Es-tu vraiment optimiste ?",questions:[{texte:"Un projet tourne mal.",options:[{l:"Je cherche ce que je peux encore faire.",s:"A"},{l:"Je suis déçu(e) mais je me reprends.",s:"B"},{l:"Je prends stock de ce qui s'est passé avant d'aller de l'avant.",s:"C"}]},{texte:"Tu imagines l'avenir.",options:[{l:"Je le vois globalement positif, même s'il y aura des défis.",s:"A"},{l:"Je l'imagine en dents de scie.",s:"B"},{l:"Je préfère ne pas trop anticiper — mieux vaut rester réaliste.",s:"C"}]},{texte:"Quelqu'un te parle d'un problème sans solution évidente.",options:[{l:"Je cherche avec lui des pistes possibles.",s:"A"},{l:"Je l'écoute sans trop savoir quoi dire.",s:"B"},{l:"Je l'aide à voir les choses telles qu'elles sont.",s:"C"}]}],resultats:{A:{titre:"Optimisme ancré",texte:"Tu portes une énergie positive qui fait du bien autour de toi. Tu crois aux solutions — et ça finit souvent par en créer.",defi:"Partage aujourd'hui une bonne nouvelle ou une perspective positive avec quelqu'un.",pct:88},B:{titre:"Optimisme équilibré",texte:"Tu es réaliste avec une touche d'espoir. C'est sain — veille juste à ne pas laisser le réalisme devenir du pessimisme.",defi:"Cette semaine, reformule un problème en opportunité.",pct:55},C:{titre:"Graine d'optimisme",texte:"Le réalisme est précieux — mais il peut parfois fermer des portes avant même qu'on essaie de les ouvrir. Un peu d'espoir, même raisonné, change l'élan.",defi:"Trouve aujourd'hui un aspect positif dans quelque chose qui t'a déçu(e).",pct:23}}},{mot:"Juste",definition:"La justice, c'est donner à chacun ce qui lui revient — pas plus, pas moins. <strong>Être juste, c'est refuser les privilèges injustifiés, les passe-droits, et les deux poids deux mesures.</strong>",testTitle:"Es-tu vraiment juste ?",questions:[{texte:"Tu dois arbitrer un conflit entre deux personnes.",options:[{l:"J'écoute les deux côtés avant de me prononcer.",s:"A"},{l:"Je penche instinctivement vers celui que je connais mieux.",s:"B"},{l:"Je préfère ne pas me prononcer — ce n'est pas mon rôle.",s:"C"}]},{texte:"Tu bénéficies d'un avantage que les autres n'ont pas.",options:[{l:"Je me demande si c'est vraiment mérité.",s:"A"},{l:"Je l'accepte sans trop y penser.",s:"B"},{l:"Je le prends — tout le monde ferait pareil.",s:"C"}]},{texte:"Quelqu'un est traité injustement devant toi.",options:[{l:"Je prends la parole pour rétablir l'équité.",s:"A"},{l:"Je suis mal à l'aise mais je ne sais pas quoi faire.",s:"B"},{l:"J'interviens si je connais bien la personne concernée.",s:"C"}]}],resultats:{A:{titre:"Sens de la justice affirmé",texte:"Tu as une boussole morale solide. Les gens savent qu'avec toi, ils seront traités équitablement.",defi:"Aujourd'hui, prends la défense de quelqu'un qui en a besoin.",pct:90},B:{titre:"Justice en construction",texte:"Tu as le sens du juste, mais tu laisses parfois les émotions ou les habitudes influencer tes jugements. C'est humain.",defi:"La prochaine fois que tu dois décider, écoute l'autre côté avant de te prononcer.",pct:54},C:{titre:"Graine de justice",texte:"Rester neutre ou n'agir que pour les proches, c'est compréhensible — mais la justice demande parfois de s'impliquer au-delà de son cercle.",defi:"Repère aujourd'hui une petite injustice et demande-toi ce que tu pourrais faire.",pct:23}}},{mot:"Solidaire",definition:"La solidarité, c'est se sentir lié aux autres — partager leurs joies, leurs peines, leurs luttes. <strong>Être solidaire, c'est ne pas regarder les difficultés des autres comme si elles ne nous concernaient pas.</strong>",testTitle:"Es-tu vraiment solidaire ?",questions:[{texte:"Quelqu'un dans ton entourage traverse une période difficile.",options:[{l:"Je me rends disponible, concrètement.",s:"A"},{l:"Je lui envoie un message d'encouragement.",s:"B"},{l:"Je lui laisse de l'espace — tout le monde a besoin de temps.",s:"C"}]},{texte:"Un groupe dont tu fais partie est en difficulté.",options:[{l:"Je prends ma part du problème et j'aide.",s:"A"},{l:"Je fais ce qu'on me demande.",s:"B"},{l:"Je m'assure d'abord que ma propre situation est stable.",s:"C"}]},{texte:"Tu vois quelqu'un en difficulté dans la rue.",options:[{l:"Je m'arrête et je propose mon aide.",s:"A"},{l:"Je ralentis mais je ne sais pas quoi faire.",s:"B"},{l:"Je suppose que quelqu'un d'autre va s'en occuper.",s:"C"}]}],resultats:{A:{titre:"Solidarité active",texte:"Tu transformes ton empathie en action. Les gens autour de toi savent qu'ils peuvent compter sur toi.",defi:"Propose concrètement ton aide à quelqu'un qui en a besoin aujourd'hui.",pct:91},B:{titre:"Solidarité douce",texte:"Tu es présent(e) émotionnellement, mais tu hésites à passer à l'action concrète. Un geste vaut mille mots.",defi:"Cette semaine, propose une aide pratique plutôt qu'un simple encouragement.",pct:55},C:{titre:"Graine de solidarité",texte:"Laisser de l'espace ou se stabiliser d'abord sont des intentions valides — mais parfois, une présence immédiate compte plus que tout le reste.",defi:"Aujourd'hui, demande à quelqu'un comment il va — et écoute vraiment la réponse.",pct:23}}},{mot:"Calme",definition:"Le calme, ce n'est pas l'absence d'émotion. <strong>C'est la capacité à ne pas être gouverné(e) par elles.</strong> Être calme, c'est rester ancré(e) quand tout s'agite autour de soi.",testTitle:"Es-tu vraiment calme ?",questions:[{texte:"Une situation stressante surgit à l'improviste.",options:[{l:"Je prends un moment pour respirer avant de réagir.",s:"A"},{l:"Je gère, mais avec une tension intérieure visible.",s:"B"},{l:"J'agis vite — dans l'urgence, la réactivité est une force.",s:"C"}]},{texte:"Quelqu'un t'énerve profondément.",options:[{l:"Je laisse passer le pic émotionnel avant de répondre.",s:"A"},{l:"Je réponds vite mais sans trop déborder.",s:"B"},{l:"Je dis ce que je pense — l'authenticité prime.",s:"C"}]},{texte:"Tu dois prendre une décision importante sous pression.",options:[{l:"Je me recentre et je décide avec clarté.",s:"A"},{l:"Je décide mais en doutant.",s:"B"},{l:"Je fais confiance à mon instinct du moment.",s:"C"}]}],resultats:{A:{titre:"Calme profond",texte:"Tu es une ancre pour ceux qui t'entourent. Ta sérénité est contagieuse et rassurante dans les moments de tension.",defi:"La prochaine fois que tu sens la tension monter, prends cinq secondes avant de réagir.",pct:89},B:{titre:"Calme en construction",texte:"Tu gères bien en surface, mais l'intérieur est parfois plus agité. Le calme profond se cultive avec la pratique.",defi:"Cette semaine, pratique deux minutes de respiration consciente chaque matin.",pct:54},C:{titre:"Graine de calme",texte:"La réactivité et l'authenticité sont de vraies qualités — mais elles gagnent en puissance quand elles sont canalisées. Une pause avant d'agir change tout.",defi:"Aujourd'hui, avant de répondre à quelque chose qui t'irrite, compte jusqu'à dix.",pct:22}}},{mot:"Attentif(ve)",definition:"L'attention, c'est le plus grand cadeau qu'on puisse faire à quelqu'un. <strong>Être attentif(ve), c'est être vraiment là — pas en train de penser à autre chose pendant que l'autre parle.</strong>",testTitle:"Es-tu vraiment attentif(ve) ?",questions:[{texte:"Quelqu'un te parle pendant que tu fais autre chose.",options:[{l:"Je pose ce que je fais et je l'écoute.",s:"A"},{l:"J'essaie de faire les deux en même temps.",s:"B"},{l:"Je réponds tout en continuant — je suis capable de multitâche.",s:"C"}]},{texte:"Tu remarques quand quelqu'un ne va pas bien.",options:[{l:"Oui, souvent — avant même qu'on me le dise.",s:"A"},{l:"Parfois, si c'est évident.",s:"B"},{l:"Je remarque quand on me le dit directement.",s:"C"}]},{texte:"Après une conversation, tu te souviens des détails.",options:[{l:"Oui, les détails importants me restent.",s:"A"},{l:"Les grandes lignes, oui.",s:"B"},{l:"Je retiens l'essentiel — les détails, je m'y replonge si besoin.",s:"C"}]}],resultats:{A:{titre:"Attention vraie",texte:"Tu es vraiment présent(e) aux autres. Ce cadeau rare crée des liens profonds et durables.",defi:"Offre aujourd'hui dix minutes d'attention totale à quelqu'un — sans téléphone.",pct:90},B:{titre:"Attention partielle",texte:"Tu écoutes, mais pas toujours pleinement. La vraie attention demande de mettre le reste en pause.",defi:"Dans ta prochaine conversation, résiste à l'envie de regarder ton téléphone.",pct:55},C:{titre:"Graine d'attention",texte:"Être efficace et synthétique est une qualité — mais parfois, les détails qu'on laisse de côté sont ceux qui comptent le plus pour l'autre.",defi:"Choisis une personne aujourd'hui et écoute-la sans préparer ta réponse.",pct:22}}},{mot:"Fiable",definition:"La fiabilité, c'est être quelqu'un sur qui on peut compter — pas seulement quand c'est facile. <strong>Être fiable, c'est que sa parole vale quelque chose, que ses engagements tiennent dans le temps.</strong>",testTitle:"Es-tu vraiment fiable ?",questions:[{texte:"Tu t'es engagé(e) à faire quelque chose, mais tu n'en as plus envie.",options:[{l:"Je le fais quand même — ma parole compte.",s:"A"},{l:"Je le fais mais en cherchant à minimiser l'effort.",s:"B"},{l:"Je préviens honnêtement et on renégocie.",s:"C"}]},{texte:"Quelqu'un compte sur toi à un moment précis.",options:[{l:"J'arrive à l'heure ou je préviens à l'avance.",s:"A"},{l:"J'arrive souvent en retard mais je préviens.",s:"B"},{l:"Je fais de mon mieux — la vie est imprévisible.",s:"C"}]},{texte:"On te confie un secret ou une responsabilité.",options:[{l:"Je le garde précieusement.",s:"A"},{l:"Je fais attention, mais ça m'arrive de glisser.",s:"B"},{l:"Je le partage avec une personne de confiance si j'ai besoin d'aide.",s:"C"}]}],resultats:{A:{titre:"Fiabilité solide",texte:"Tu es quelqu'un sur qui on peut vraiment compter. Cette qualité est le fondement de toute relation durable.",defi:"Tiens aujourd'hui un engagement que tu aurais pu reporter.",pct:92},B:{titre:"Fiabilité en développement",texte:"Tu as les bonnes intentions, mais l'exécution manque parfois de constance. La fiabilité se construit par des petits actes répétés.",defi:"Cette semaine, choisis un engagement et tiens-le à la lettre.",pct:56},C:{titre:"Graine de fiabilité",texte:"Renégocier et s'adapter sont des qualités — mais répétés, ils peuvent fragiliser la confiance que les autres ont en toi.",defi:"Fixe-toi un engagement simple aujourd'hui — et tiens-le.",pct:23}}},{mot:"Authentique",definition:"L'authenticité, c'est être soi — sans masque, sans rôle, sans performance. <strong>Être authentique, c'est dire ce qu'on pense, montrer ce qu'on ressent, et vivre en accord avec ses valeurs.</strong>",testTitle:"Es-tu vraiment authentique ?",questions:[{texte:"Tu es dans un groupe où l'ambiance ne te ressemble pas.",options:[{l:"Je reste moi-même, quitte à détonner.",s:"A"},{l:"Je m'adapte un peu sans me trahir.",s:"B"},{l:"Je joue le jeu — s'adapter est une forme d'intelligence sociale.",s:"C"}]},{texte:"On te demande comment tu vas, mais tu ne vas pas très bien.",options:[{l:"Je réponds honnêtement, si le contexte le permet.",s:"A"},{l:"Je dis 'bien' mais avec moins d'enthousiasme.",s:"B"},{l:"Je dis 'très bien' — certaines choses restent privées.",s:"C"}]},{texte:"Tu as une opinion impopulaire.",options:[{l:"Je la défends avec calme et conviction.",s:"A"},{l:"Je la nuance pour ne pas choquer.",s:"B"},{l:"Je choisis mes batailles — tout ne mérite pas d'être dit.",s:"C"}]}],resultats:{A:{titre:"Authenticité affirmée",texte:"Tu oses être toi-même — et c'est cette sincérité qui attire les bonnes personnes et crée de vraies connexions.",defi:"Partage aujourd'hui une opinion vraie, même si elle est impopulaire.",pct:90},B:{titre:"Authenticité nuancée",texte:"Tu es sincère, mais tu t'adaptes parfois plus que nécessaire. Rappelle-toi que ta vraie nature est ta plus grande force.",defi:"Cette semaine, dis non à quelque chose qui ne te ressemble pas.",pct:55},C:{titre:"Graine d'authenticité",texte:"S'adapter et choisir ses moments sont des formes de sagesse — mais si c'est systématique, on finit par perdre de vue qui on est vraiment.",defi:"Exprime aujourd'hui une émotion réelle plutôt que de la masquer.",pct:23}}},{mot:"Ouvert(e)",definition:"L'ouverture d'esprit, c'est accueillir le nouveau sans le rejeter d'emblée. <strong>Être ouvert(e), c'est considérer que l'on peut avoir tort, que les autres peuvent avoir raison, et que le monde est plus vaste que son propre point de vue.</strong>",testTitle:"Es-tu vraiment ouvert(e) d'esprit ?",questions:[{texte:"Quelqu'un remet en question une de tes convictions.",options:[{l:"Je l'écoute vraiment et je réévalue si nécessaire.",s:"A"},{l:"J'écoute, mais je reste sur ma position.",s:"B"},{l:"Je l'écoute et j'explique pourquoi je reste sur ma position.",s:"C"}]},{texte:"On te propose une expérience très différente de tes habitudes.",options:[{l:"J'accepte avec curiosité.",s:"A"},{l:"J'hésite mais j'essaie si on insiste.",s:"B"},{l:"Je propose quelque chose qui nous conviendrait à tous les deux.",s:"C"}]},{texte:"Tu découvres que tu t'étais trompé(e).",options:[{l:"Je le reconnais volontiers et j'ajuste ma vision.",s:"A"},{l:"Je l'accepte intérieurement mais j'ai du mal à le dire.",s:"B"},{l:"Je reconnais les faits tout en expliquant mon raisonnement initial.",s:"C"}]}],resultats:{A:{titre:"Ouverture vraie",texte:"Tu accueilles le monde avec curiosité et humilité. Cette qualité te permet d'apprendre plus vite et de créer des liens plus riches.",defi:"Aujourd'hui, change d'avis sur quelque chose — et dis-le.",pct:88},B:{titre:"Ouverture sélective",texte:"Tu es ouvert(e) dans certains domaines, mais tu as des zones de résistance. C'est humain — les identifier est déjà beaucoup.",defi:"Cette semaine, lis ou écoute un point de vue opposé au tien sur un sujet qui te tient à coeur.",pct:53},C:{titre:"Graine d'ouverture",texte:"Expliquer son raisonnement et chercher des compromis sont des qualités — mais parfois, simplement accueillir une idée sans la défendre ouvre des portes inattendues.",defi:"Pose aujourd'hui une question à quelqu'un dont tu ne partages pas les idées.",pct:22}}},{mot:"Déterminé(e)",definition:"La détermination, c'est avoir un cap et s'y tenir — même quand c'est difficile, même quand les autres doutent. <strong>Être déterminé(e), c'est savoir ce que l'on veut et ne pas lâcher tant qu'on ne l'a pas obtenu.</strong>",testTitle:"Es-tu vraiment déterminé(e) ?",questions:[{texte:"Un objectif que tu t'es fixé rencontre des obstacles.",options:[{l:"Je trouve un chemin alternatif et je continue.",s:"A"},{l:"Je m'adapte mais je perds un peu d'élan.",s:"B"},{l:"Je prends le temps de réévaluer si l'objectif est toujours pertinent.",s:"C"}]},{texte:"Les gens autour de toi doutent de ton projet.",options:[{l:"Leur doute ne change rien à ma direction.",s:"A"},{l:"Je les écoute mais je tiens le cap.",s:"B"},{l:"Je prends leurs doutes en compte — ils voient peut-être quelque chose que je ne vois pas.",s:"C"}]},{texte:"Tu dois faire un choix difficile entre confort et ambition.",options:[{l:"Je choisis l'ambition, même si c'est inconfortable.",s:"A"},{l:"Je cherche un compromis.",s:"B"},{l:"Je m'assure que l'ambition en vaut vraiment la peine avant de sacrifier le confort.",s:"C"}]}],resultats:{A:{titre:"Détermination affirmée",texte:"Tu sais ce que tu veux et tu ne lâches pas. Cette force intérieure impressionne et inspire ceux qui t'entourent.",defi:"Fais aujourd'hui une action concrète vers un objectif que tu repousses.",pct:91},B:{titre:"Détermination en construction",texte:"Tu as la direction, mais le doute extérieur peut te déstabiliser. Renforcer ta confiance intérieure est la prochaine étape.",defi:"Cette semaine, avance sur un objectif sans en parler à personne.",pct:56},C:{titre:"Graine de détermination",texte:"Évaluer et s'assurer sont des réflexes intelligents — mais ils peuvent aussi devenir des façons d'éviter de s'engager vraiment.",defi:"Fixe-toi un seul objectif clair pour cette semaine et tiens-le.",pct:24}}},{mot:"Responsable",definition:"La responsabilité, c'est assumer les conséquences de ses actes — sans rejeter la faute sur les circonstances ou sur les autres. <strong>Être responsable, c'est dire 'c'est moi' quand c'est le cas, et agir en conséquence.</strong>",testTitle:"Es-tu vraiment responsable ?",questions:[{texte:"Tu as fait une erreur qui a eu des conséquences sur quelqu'un.",options:[{l:"Je l'admets, je m'excuse et je cherche à réparer.",s:"A"},{l:"Je l'admets mais j'explique aussi les circonstances.",s:"B"},{l:"Je présente les faits tels qu'ils sont — le contexte fait partie de l'histoire.",s:"C"}]},{texte:"Un projet dont tu faisais partie échoue.",options:[{l:"Je prends ma part de responsabilité clairement.",s:"A"},{l:"Je reconnais ma part mais j'en attribue aussi aux autres.",s:"B"},{l:"Je fais une analyse honnête de ce qui s'est passé — en incluant toutes les causes.",s:"C"}]},{texte:"Tu as oublié quelque chose d'important.",options:[{l:"Je le dis directement et je cherche comment rattraper.",s:"A"},{l:"Je le dis mais je me justifie.",s:"B"},{l:"J'explique pourquoi ça s'est passé — pour qu'on ne répète pas l'erreur.",s:"C"}]}],resultats:{A:{titre:"Responsabilité assumée",texte:"Tu prends tes actes en charge sans chercher d'excuse. Cette qualité inspire confiance et respect.",defi:"Si tu dois quelque chose à quelqu'un, règle-le aujourd'hui.",pct:91},B:{titre:"Responsabilité en progrès",texte:"Tu assumes, mais avec des nuances qui peuvent parfois ressembler à des excuses. Aller droit au but renforce la confiance.",defi:"La prochaine fois que tu te trompes, dis simplement 'j'ai eu tort' sans rien ajouter.",pct:55},C:{titre:"Graine de responsabilité",texte:"Expliquer le contexte est légitime — mais parfois, un 'j'aurais pu faire mieux' sans explication est ce dont l'autre a besoin.",defi:"Reconnais aujourd'hui une erreur sans chercher de justification.",pct:23}}},{mot:"Empathique",definition:"L'empathie, c'est ressentir ce que l'autre ressent — se mettre à sa place non pas pour le plaindre, mais pour le comprendre. <strong>Être empathique, c'est voir le monde avec les yeux de l'autre, même quand ce monde est très différent du nôtre.</strong>",testTitle:"Es-tu vraiment empathique ?",questions:[{texte:"Quelqu'un te parle d'une douleur que tu n'as jamais vécue.",options:[{l:"J'essaie vraiment d'imaginer ce que ça fait.",s:"A"},{l:"Je compatis mais j'ai du mal à vraiment saisir.",s:"B"},{l:"Je cherche à l'aider à trouver une solution.",s:"C"}]},{texte:"Tu vois quelqu'un pleurer dans un lieu public.",options:[{l:"Je ressens quelque chose et je me demande si je peux aider.",s:"A"},{l:"Je remarque mais je ne sais pas quoi faire.",s:"B"},{l:"Je respecte son espace — tout le monde a besoin d'intimité.",s:"C"}]},{texte:"Quelqu'un réagit très fort à quelque chose qui te semblerait anodin.",options:[{l:"Je cherche à comprendre pourquoi c'est important pour lui.",s:"A"},{l:"Je trouve ça excessif, mais je ne le dis pas.",s:"B"},{l:"Je l'écoute, puis j'essaie de remettre les choses en perspective.",s:"C"}]}],resultats:{A:{titre:"Empathie profonde",texte:"Tu as ce don rare de te mettre vraiment à la place des autres. Cela crée des liens authentiques et durables.",defi:"Aujourd'hui, pose une question à quelqu'un sur ce qu'il ressent — pas sur ce qu'il fait.",pct:90},B:{titre:"Empathie en développement",texte:"Tu as de la sensibilité, mais l'empathie profonde demande un effort conscient. Elle se cultive par la curiosité pour l'autre.",defi:"Cette semaine, écoute quelqu'un sans chercher à résoudre son problème.",pct:54},C:{titre:"Graine d'empathie",texte:"Aider et remettre en perspective sont des intentions bienveillantes — mais parfois, l'autre a juste besoin d'être entendu, pas aidé.",defi:"La prochaine fois que quelqu'un te parle d'un problème, pose une question avant de répondre.",pct:22}}},{mot:"Discipliné(e)",definition:"La discipline, c'est faire ce qu'on a décidé de faire — même quand l'envie n'est plus là. <strong>Être discipliné(e), c'est choisir ses objectifs plutôt que ses humeurs du moment.</strong>",testTitle:"Es-tu vraiment discipliné(e) ?",questions:[{texte:"Tu dois faire quelque chose d'utile mais tu n'en as pas envie.",options:[{l:"Je le fais quand même — l'envie viendra (ou pas).",s:"A"},{l:"Je négocie avec moi-même pour le faire partiellement.",s:"B"},{l:"Je l'intègre dans un moment où je serai plus en forme.",s:"C"}]},{texte:"Tu t'es fixé une routine mais les exceptions s'accumulent.",options:[{l:"Je reviens à la routine sans culpabiliser.",s:"A"},{l:"Je me sens coupable et ça me démotive.",s:"B"},{l:"Je réévalue la routine — peut-être qu'elle ne me convient plus.",s:"C"}]},{texte:"Une distraction s'offre à toi pendant que tu travailles.",options:[{l:"Je la note et j'y reviens plus tard.",s:"A"},{l:"Je résiste un moment puis je cède.",s:"B"},{l:"Je m'accorde une courte pause — ça me rend plus efficace ensuite.",s:"C"}]}],resultats:{A:{titre:"Discipline solide",texte:"Tu fais ce que tu as décidé, indépendamment de tes humeurs. C'est cette constance qui crée les résultats durables.",defi:"Tiens aujourd'hui un engagement envers toi-même que tu aurais pu reporter.",pct:89},B:{titre:"Discipline en construction",texte:"Tu as la volonté, mais elle vacille. La discipline se renforce en réduisant la taille des engagements jusqu'à ce qu'ils deviennent automatiques.",defi:"Cette semaine, réduis un objectif à sa plus petite version possible — et fais-le tous les jours.",pct:54},C:{titre:"Graine de discipline",texte:"S'adapter et s'écouter sont de bonnes choses — mais répétés, ils peuvent devenir des façons élégantes d'éviter l'effort.",defi:"Choisis une seule habitude à tenir cette semaine — juste cinq minutes par jour.",pct:22}}},{mot:"Enthousiaste",definition:"L'enthousiasme, c'est cette énergie qui fait qu'on se lève le matin avec envie. <strong>Être enthousiaste, c'est s'engager pleinement dans ce qu'on fait — et transmettre cette énergie aux autres.</strong>",testTitle:"Es-tu vraiment enthousiaste ?",questions:[{texte:"On te propose un nouveau projet.",options:[{l:"Je me sens immédiatement porté(e) par l'énergie du possible.",s:"A"},{l:"Je m'intéresse si le projet me parle.",s:"B"},{l:"J'évalue d'abord ce que ça implique avant de m'emballer.",s:"C"}]},{texte:"Tu parles de quelque chose qui te passionne.",options:[{l:"Mon énergie est communicative — les gens embarquent.",s:"A"},{l:"Je partage avec plaisir, mais sans débordement.",s:"B"},{l:"Je mesure mon enthousiasme pour ne pas sembler naïf(ve).",s:"C"}]},{texte:"Tu commences une journée ordinaire.",options:[{l:"Je trouve un angle qui la rend intéressante.",s:"A"},{l:"Je me mets en marche progressivement.",s:"B"},{l:"Je garde mon énergie pour ce qui en vaut vraiment la peine.",s:"C"}]}],resultats:{A:{titre:"Enthousiasme rayonnant",texte:"Tu es une source d'énergie pour ceux qui t'entourent. Ton engagement est contagieux et inspirant.",defi:"Partage aujourd'hui ton enthousiasme pour quelque chose à quelqu'un qui en a besoin.",pct:90},B:{titre:"Enthousiasme ciblé",texte:"Tu t'engages pleinement quand le sujet t'inspire. Tu peux aussi apporter cette énergie dans des contextes moins évidents.",defi:"Trouve aujourd'hui quelque chose d'enthousiasmant dans une tâche ordinaire.",pct:55},C:{titre:"Graine d'enthousiasme",texte:"Évaluer et préserver son énergie sont des réflexes sensés — mais l'enthousiasme naît parfois avant qu'on ait tout analysé. Laisse-le parfois arriver sans permission.",defi:"Identifie aujourd'hui une chose que tu fais et trouve une raison de t'y engager vraiment.",pct:23}}},{mot:"Inspirant(e)",definition:"Inspirer, ce n'est pas être parfait(e). <strong>C'est montrer par l'exemple que c'est possible</strong> — que l'on peut choisir sa vie, surmonter ses peurs, et agir selon ses valeurs. L'inspiration naît de l'authenticité, pas de la perfection.",testTitle:"Es-tu vraiment inspirant(e) ?",questions:[{texte:"Les gens autour de toi te parlent-ils de ce que tu leur apportes ?",options:[{l:"Oui, on me dit parfois que je donne envie d'agir.",s:"A"},{l:"Rarement, mais ça arrive.",s:"B"},{l:"Je ne cherche pas à inspirer — je vis juste comme je peux.",s:"C"}]},{texte:"Tu vis quelque chose de difficile.",options:[{l:"Je cherche à en tirer une leçon et à avancer.",s:"A"},{l:"Je survis, mais sans y chercher de sens.",s:"B"},{l:"Je traverse, et je partage si quelqu'un me le demande.",s:"C"}]},{texte:"Quelqu'un te dit qu'il ne sait pas comment faire.",options:[{l:"Je partage mon expérience et j'encourage.",s:"A"},{l:"Je donne des conseils pratiques.",s:"B"},{l:"Je lui dis que c'est normal de ne pas savoir.",s:"C"}]}],resultats:{A:{titre:"Source d'inspiration",texte:"Tu inspires par ce que tu es autant que par ce que tu fais. Les gens repartent de chez toi avec plus d'énergie.",defi:"Raconte aujourd'hui à quelqu'un une expérience difficile que tu as surmontée.",pct:89},B:{titre:"Inspiration en devenir",texte:"Tu as les ingrédients — l'authenticité, l'expérience, la résilience. Il te manque parfois la confiance pour les partager.",defi:"Cette semaine, partage une leçon que la vie t'a apprise.",pct:54},C:{titre:"Graine d'inspiration",texte:"Vivre sans chercher à inspirer est honnête — et parfois, c'est justement cette discrétion qui touche les gens. Tu inspires peut-être plus que tu ne le crois.",defi:"Fais aujourd'hui quelque chose qui te ressemble profondément — et fais-le bien.",pct:23}}},{mot:"Flexible",definition:"La flexibilité, c'est s'adapter sans se perdre. <strong>Être flexible, c'est tenir ses objectifs fermement et ses méthodes légèrement</strong> — prêt(e) à changer de chemin sans changer de destination.",testTitle:"Es-tu vraiment flexible ?",questions:[{texte:"Un plan bien établi tombe à l'eau.",options:[{l:"Je m'adapte rapidement et trouve une alternative.",s:"A"},{l:"Je suis déçu(e) mais je rebondis.",s:"B"},{l:"Je prends le temps de comprendre ce qui s'est passé avant de rebondir.",s:"C"}]},{texte:"Quelqu'un propose une façon de faire très différente de la tienne.",options:[{l:"Je l'essaie avec ouverture.",s:"A"},{l:"Je l'évalue avant de me décider.",s:"B"},{l:"Je propose qu'on combine les deux approches.",s:"C"}]},{texte:"Tes priorités changent soudainement.",options:[{l:"Je me réorganise sans résistance.",s:"A"},{l:"Je m'adapte, mais avec un temps d'ajustement.",s:"B"},{l:"Je vérifie d'abord que ce changement est vraiment nécessaire.",s:"C"}]}],resultats:{A:{titre:"Flexibilité naturelle",texte:"Tu t'adaptes avec fluidité. Cette qualité te rend efficace dans un monde qui change en permanence.",defi:"Aujourd'hui, essaie de faire quelque chose d'habituel d'une façon différente.",pct:87},B:{titre:"Flexibilité en construction",texte:"Tu t'adaptes, mais pas toujours facilement. La flexibilité s'entraîne en sortant volontairement de ses habitudes.",defi:"Cette semaine, accepte un changement sans essayer de le contrôler.",pct:53},C:{titre:"Graine de flexibilité",texte:"Comprendre, combiner et vérifier sont des réflexes solides — mais parfois, s'adapter vite sans tout analyser est la meilleure réponse possible.",defi:"Laisse quelqu'un d'autre décider à ta place pour une chose aujourd'hui.",pct:22}}},{mot:"Sage",definition:"La sagesse, ce n'est pas l'accumulation de savoir. <strong>C'est savoir quoi faire de ce qu'on sait.</strong> Le ou la sage agit avec discernement, parle avec mesure, et vit en accord avec ce qui compte vraiment.",testTitle:"Es-tu vraiment sage ?",questions:[{texte:"Tu dois prendre une décision importante.",options:[{l:"Je prends le temps de peser les conséquences à long terme.",s:"A"},{l:"Je décide rapidement en me fiant à mon instinct.",s:"B"},{l:"Je cherche l'option la plus raisonnable dans le contexte.",s:"C"}]},{texte:"Quelqu'un te demande ton avis sur une situation complexe.",options:[{l:"Je réfléchis avant de parler, et je nuance.",s:"A"},{l:"Je donne mon avis franchement.",s:"B"},{l:"Je pose des questions pour mieux comprendre avant de me prononcer.",s:"C"}]},{texte:"Tu vis une situation difficile.",options:[{l:"Je cherche le sens de ce que ça m'apprend.",s:"A"},{l:"Je gère le présent sans trop philosopher.",s:"B"},{l:"Je m'appuie sur ce que j'ai déjà traversé pour avancer.",s:"C"}]}],resultats:{A:{titre:"Sagesse affirmée",texte:"Tu agis avec discernement et profondeur. Les gens viennent te voir pour prendre du recul — et ils repartent avec plus de clarté.",defi:"Partage aujourd'hui une réflexion qui t'a aidé(e) à voir les choses autrement.",pct:88},B:{titre:"Sagesse en chemin",texte:"Tu as de la profondeur, mais tu agis parfois trop vite. La sagesse se nourrit de pauses — prendre un moment avant d'agir change tout.",defi:"Avant ta prochaine décision importante, dors dessus une nuit.",pct:53},C:{titre:"Graine de sagesse",texte:"Poser des questions et s'appuyer sur l'expérience sont de vrais signes de maturité. La sagesse, c'est exactement ça — et tu es déjà sur ce chemin.",defi:"Aujourd'hui, avant de répondre à quelque chose d'important, prends dix secondes de silence.",pct:22}}}];
 
 let currentMot=null,answers={},passeMot=null;
 function getMot(n){return MOTS.find(m=>m.mot===n)||MOTS[0]}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
 
+function applyColor(screenEl, mot){
+  const f = getFamille(mot);
+  ['col-terra','col-blue','col-sage','col-rose','col-gold','col-plum'].forEach(c=>screenEl.classList.remove(c));
+  screenEl.classList.add(BG[f]);
+}
+
 function readURL(){
   const p=new URLSearchParams(window.location.search);
   const mot=p.get('mot'),de=p.get('de'),pour=p.get('pour');
+  const homeScreen=document.getElementById('screen-home');
   if(mot&&de){
     currentMot=getMot(mot);
-    document.getElementById('home-from-label').textContent='De la part de '+de+(pour?' pour '+pour:'');
+    const f=getFamille(mot);
+    applyColor(homeScreen,mot);
+    document.getElementById('home-from').textContent='De la part de '+de+(pour?' pour '+pour:'');
     document.getElementById('home-msg').textContent='Il ou elle t\'a envoyé un mot.';
-    document.getElementById('home-badge').textContent=mot;
+    const badge=document.getElementById('home-badge');
+    badge.className='word-badge '+ACC[f];
+    const dot=document.createElement('span');dot.className='word-badge-dot';dot.style.background=DOTS[f];
+    badge.innerHTML='';badge.appendChild(dot);badge.appendChild(document.createTextNode(mot));
   } else {
-    currentMot=getMot('Généreux');
-    document.getElementById('home-from-label').textContent='Bienvenue';
-    document.getElementById('home-msg').textContent='Découvre un mot, fais le test, passe la balle.';
-    document.getElementById('home-badge').textContent='Donne-moi un mot';
+    currentMot=getMot('Généreux(se)');
+    applyColor(homeScreen,'Généreux(se)');
+    document.getElementById('home-from').textContent='Bienvenue';
+    document.getElementById('home-msg').textContent='Découvre un mot, fais le test,\npasse la balle.';
+    const badge=document.getElementById('home-badge');
+    badge.className='word-badge acc-terra';
+    badge.textContent='Un mot pour toi';
   }
 }
 
 function goHome(){readURL();show('screen-home')}
-function goToMot(){document.getElementById('mot-display').textContent=currentMot.mot;document.getElementById('mot-def').innerHTML=currentMot.definition;answers={};show('screen-mot')}
+
+function goToMot(){
+  const s=document.getElementById('screen-mot');
+  applyColor(s,currentMot.mot);
+  const f=getFamille(currentMot.mot);
+  document.getElementById('mot-display').textContent=getMotBase(currentMot.mot);
+  document.getElementById('mot-form').textContent=getMotForm(currentMot.mot);
+  document.getElementById('mot-def').innerHTML=currentMot.definition;
+  const fillEl=document.querySelector('#screen-mot .score-fill');
+  if(fillEl) fillEl.style.background=FILL[f];
+  answers={};show('screen-mot');
+}
+
 function goToTest(){
   answers={};
-  document.getElementById('test-lbl').textContent=currentMot.mot;
+  const f=getFamille(currentMot.mot);
+  const s=document.getElementById('screen-test');
+  applyColor(s,currentMot.mot);
+  document.getElementById('test-eyebrow').textContent=currentMot.mot;
   document.getElementById('test-title').textContent=currentMot.testTitle;
   const c=document.getElementById('questions-container');c.innerHTML='';
   currentMot.questions.forEach((q,qi)=>{
@@ -201,36 +312,75 @@ function goToTest(){
   });
   checkValider();show('screen-test');
 }
-function checkValider(){const btn=document.getElementById('btn-valider');const ok=Object.keys(answers).length===currentMot.questions.length;btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed'}
+
+function checkValider(){
+  const btn=document.getElementById('btn-valider');
+  const ok=Object.keys(answers).length===currentMot.questions.length;
+  btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed';
+}
+
 function validerTest(){
   const cnt={A:0,B:0,C:0};Object.values(answers).forEach(s=>cnt[s]++);
   let maj='B';if(cnt.A>=cnt.B&&cnt.A>=cnt.C)maj='A';else if(cnt.C>cnt.A&&cnt.C>=cnt.B)maj='C';
   const r=currentMot.resultats[maj];
-  document.getElementById('res-lbl').textContent=currentMot.mot+' · ton profil';
+  const f=getFamille(currentMot.mot);
+  const s=document.getElementById('screen-resultat');
+  applyColor(s,currentMot.mot);
+  document.getElementById('res-tag').textContent=currentMot.mot+' · ton profil';
   document.getElementById('res-titre').textContent=r.titre;
   document.getElementById('res-scores').textContent=cnt.A+' A · '+cnt.B+' B · '+cnt.C+' C';
   document.getElementById('res-text').textContent=r.texte;
   document.getElementById('defi-text').textContent=r.defi;
-  show('screen-resultat');setTimeout(()=>{document.getElementById('score-fill').style.width=r.pct+'%'},200);
+  show('screen-resultat');
+  setTimeout(()=>{
+    const fill=document.getElementById('score-fill');
+    fill.style.background=FILL[f];
+    fill.style.width=r.pct+'%';
+  },200);
 }
+
 function goToResultat(){show('screen-resultat')}
+
 function goToChoix(){
   const grid=document.getElementById('choix-grid');grid.innerHTML='';passeMot=null;
-  MOTS.forEach(m=>{const chip=document.createElement('button');chip.className='mot-chip';chip.textContent=m.mot;chip.onclick=()=>{grid.querySelectorAll('.mot-chip').forEach(c=>c.classList.remove('sel-chip'));chip.classList.add('sel-chip');passeMot=m.mot;const btn=document.getElementById('btn-choix-valider');btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer'};grid.appendChild(chip)});
+  MOTS.forEach(m=>{
+    const chip=document.createElement('button');chip.className='choix-chip';chip.textContent=m.mot;
+    chip.onclick=()=>{
+      grid.querySelectorAll('.choix-chip').forEach(c=>c.classList.remove('sel-chip'));
+      chip.classList.add('sel-chip');passeMot=m.mot;
+      const btn=document.getElementById('btn-choix-valider');btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
+    };
+    grid.appendChild(chip);
+  });
   const btn=document.getElementById('btn-choix-valider');btn.disabled=true;btn.style.opacity='.4';btn.style.cursor='not-allowed';
   show('screen-choix');
 }
+
 function validerChoix(){if(!passeMot)return;currentMot=getMot(passeMot);goToMot()}
+
 function goToPasse(){
   const grid=document.getElementById('passe-mots-grid');grid.innerHTML='';passeMot=null;
   document.getElementById('prenom-envoyeur').value='';document.getElementById('prenom-dest').value='';
-  MOTS.forEach(m=>{const chip=document.createElement('button');chip.className='mot-chip';chip.textContent=m.mot;chip.onclick=()=>{grid.querySelectorAll('.mot-chip').forEach(c=>c.classList.remove('sel-chip'));chip.classList.add('sel-chip');passeMot=m.mot;checkPasse()};grid.appendChild(chip)});
+  MOTS.forEach(m=>{
+    const chip=document.createElement('button');chip.className='mot-chip';chip.textContent=m.mot;
+    chip.onclick=()=>{grid.querySelectorAll('.mot-chip').forEach(c=>c.classList.remove('sel-chip'));chip.classList.add('sel-chip');passeMot=m.mot;checkPasse()};
+    grid.appendChild(chip);
+  });
   ['prenom-envoyeur','prenom-dest'].forEach(id=>{document.getElementById(id).addEventListener('input',checkPasse)});
   checkPasse();show('screen-passe');
 }
-function checkPasse(){const e=document.getElementById('prenom-envoyeur').value.trim();const d=document.getElementById('prenom-dest').value.trim();const btn=document.getElementById('btn-generer');const ok=e.length>0&&d.length>0&&passeMot;btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed'}
+
+function checkPasse(){
+  const e=document.getElementById('prenom-envoyeur').value.trim();
+  const d=document.getElementById('prenom-dest').value.trim();
+  const btn=document.getElementById('btn-generer');
+  const ok=e.length>0&&d.length>0&&passeMot;
+  btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';btn.style.cursor=ok?'pointer':'not-allowed';
+}
+
 function genererLien(){
-  const e=document.getElementById('prenom-envoyeur').value.trim();const d=document.getElementById('prenom-dest').value.trim();
+  const e=document.getElementById('prenom-envoyeur').value.trim();
+  const d=document.getElementById('prenom-dest').value.trim();
   if(!e||!d||!passeMot)return;
   const base=window.location.origin+window.location.pathname;
   const lien=base+'?mot='+encodeURIComponent(passeMot)+'&de='+encodeURIComponent(e)+'&pour='+encodeURIComponent(d);
@@ -240,7 +390,14 @@ function genererLien(){
   document.getElementById('btn-copier-txt').textContent='Copier le lien';
   show('screen-envoi');
 }
-function copierLien(){const lien=document.getElementById('lien-display').textContent;navigator.clipboard.writeText(lien).then(()=>{document.getElementById('btn-copier-txt').textContent='Lien copié !';setTimeout(()=>{document.getElementById('btn-copier-txt').textContent='Copier le lien'},2000)}).catch(()=>{document.getElementById('btn-copier-txt').textContent='Lien copié !'})}
+
+function copierLien(){
+  const lien=document.getElementById('lien-display').textContent;
+  navigator.clipboard.writeText(lien).then(()=>{
+    document.getElementById('btn-copier-txt').textContent='Lien copié !';
+    setTimeout(()=>{document.getElementById('btn-copier-txt').textContent='Copier le lien'},2000);
+  }).catch(()=>{document.getElementById('btn-copier-txt').textContent='Lien copié !'});
+}
 
 readURL();
 </script>
